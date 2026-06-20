@@ -1,12 +1,12 @@
 <?php ob_start(); ?>
 
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Accueil - Enzo Fournier</title>
+    <title>418 - Fynt</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
@@ -26,13 +26,13 @@
                 <div class="mb-4">
                     <span class="display-1 floating-animation" style="font-size:6rem;">🫖</span>
                 </div>
-                <h1 class="glow-effect mb-3">418 - Je suis une théière</h1>
+                <h1 class="glow-effect mb-3">418 - I'm a teapot</h1>
                 <p class="lead mb-4">
-                    Désolé, je ne peux pas faire de café car je suis une théière.<br>
-                    <span class="badge bg-warning mt-2">Erreur HTTP 418</span>
+                    Sorry, I can't brew coffee — I'm a teapot.<br>
+                    <span class="badge bg-warning mt-2">HTTP error 418</span>
                 </p>
                 <a href="/" class="btn btn-primary">
-                    <i class="fa fa-home me-2"></i>Retour à l'accueil
+                    <i class="fa fa-home me-2"></i>Back to home
                 </a>
             </div>
         </div>

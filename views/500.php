@@ -6,8 +6,8 @@
     <p style="font-size: 1.2rem; color: #666; margin: 1rem 0;"><?= $message ?></p>
 
     <div style="margin-top: 2rem;">
-        <a href="<?= homeUrl() ?>" class="btn">🏠 Retour à l'accueil</a>
-        <a href="javascript:history.back()" class="btn" style="background: #6c757d;">← Page précédente</a>
+        <a href="<?= homeUrl() ?>" class="btn">🏠 Back to home</a>
+        <a href="javascript:history.back()" class="btn" style="background: #6c757d;">← Go back</a>
     </div>
 </div>
 <?php $content = ob_get_clean();

@@ -10,27 +10,12 @@ class AboutAdminController extends BaseController
         'about_hero_subtitle' => [
             'label'   => "Sous-titre du hero (sous le nom)",
             'markdown'=> false,
-            'hint'    => "Variable disponible : %age% (remplacée par l'âge calculé). Les sauts de ligne sont gardés.",
+            'hint'    => "Court texte affiché sous le nom. Les sauts de ligne sont gardés.",
         ],
         'about_bio'           => [
             'label'   => "Bio (Qui suis-je ?)",
             'markdown'=> true,
             'hint'    => "Markdown supporté : **gras**, *italique*, [lien](url), listes, paragraphes (ligne vide).",
-        ],
-        'github_user'         => [
-            'label'   => "Compte GitHub personnel",
-            'markdown'=> false,
-            'hint'    => "Login GitHub uniquement (ex: Fydyr). Sert à fetcher les derniers repos personnels.",
-        ],
-        'github_org'          => [
-            'label'   => "Compte / Organisation GitHub additionnelle",
-            'markdown'=> false,
-            'hint'    => "Login GitHub d'une org (ex: aeroliths) ou d'un compte secondaire à afficher en plus. Laisser vide pour ne pas afficher.",
-        ],
-        'github_org_label'    => [
-            'label'   => "Titre du bloc GitHub additionnel",
-            'markdown'=> false,
-            'hint'    => "Texte affiché au-dessus des repos de l'org. Ex: 'Aeroliths - mon projet principal'.",
         ],
     ];
 

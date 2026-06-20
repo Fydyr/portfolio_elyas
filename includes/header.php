@@ -9,13 +9,17 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// récupérer le nombre de projets sur la bdd
-$stmt = $pdo->prepare("SELECT COUNT(*) FROM projects");
-$stmt->execute();
-$project_count = $stmt->fetchColumn();
+// Nombre total d'images du portfolio (stat footer)
+try {
+    $stmt = $pdo->prepare("SELECT COUNT(*) FROM portfolio_images");
+    $stmt->execute();
+    $project_count = (int)$stmt->fetchColumn();
+} catch (Exception $e) {
+    $project_count = 0;
+}
 
 // Configuration du site
-$site_title = "Enzo Fournier";
+$site_title = "Fynt";
 
 // Détecte la page courante depuis le path de l'URL (les routes sont en /xxx, plus de /index.php/)
 $requestPath = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?: '/';
@@ -38,16 +42,17 @@ $page_title = isset($page_meta['title']) ? $page_meta['title'] : $site_title;
 
 // Navigation items
 $nav_items = [
-    'index'    => ['title' => 'Accueil',  'icon' => '🏠', 'url' => homeUrl()],
-    'about'    => ['title' => 'À propos', 'icon' => '👤', 'url' => url('about')],
-    'projects' => ['title' => 'Projets',  'icon' => '📂', 'url' => url('projects')],
-    'contact'  => ['title' => 'Contact',  'icon' => '📌', 'url' => url('contact')],
+    'index'    => ['title' => 'Home',        'icon' => '🏠', 'url' => homeUrl()],
+    'about'    => ['title' => 'About',       'icon' => '✨', 'url' => url('about')],
+    'projects' => ['title' => 'Portfolio',   'icon' => '🎨', 'url' => url('projects')],
+    'price'    => ['title' => 'Commissions', 'icon' => '🧾', 'url' => url('price')],
+    'contact'  => ['title' => 'Contact',     'icon' => '💬', 'url' => url('contact')],
 ];
 
 // Gestion de l'authentification
 if (isset($_SESSION['user_id'])) {
     $nav_items['admin'] = ['title' => 'Admin', 'icon' => '⚙️', 'url' => url('admin')];
-    $nav_items['logout'] = ['title' => 'Déconnexion', 'icon' => '🚪', 'url' => url('logout')];
+    $nav_items['logout'] = ['title' => 'Logout', 'icon' => '🚪', 'url' => url('logout')];
 }
 // else {
 //     $nav_items['login'] = ['title' => 'Connexion', 'icon' => '🔐', 'url' => url('login')];
@@ -56,7 +61,7 @@ if (isset($_SESSION['user_id'])) {
 
 ?>
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -86,8 +91,10 @@ if (isset($_SESSION['user_id'])) {
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Google Fonts (carrd theme: Big Shoulders Display + Amatic SC + Courier Prime) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500;600;700;800;900&family=Amatic+SC:wght@700&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
     <!-- Logo du site -->
     <link rel="icon" type="image/x-icon" href="/assets//img/logo_site.ico">
@@ -96,9 +103,9 @@ if (isset($_SESSION['user_id'])) {
     <style>
         /* Variables CSS */
         :root {
-            --primary-color: #00d4ff;
-            --secondary-color: #ff006e;
-            --accent-color: #7209b7;
+            --primary-color: #B98FFF;
+            --secondary-color: #8D63B8;
+            --accent-color: #75009E;
             --success-color: #00ff88;
             --warning-color: #ffaa00;
             --danger-color: #ff0040;
@@ -108,12 +115,12 @@ if (isset($_SESSION['user_id'])) {
             --text-primary: #ffffff;
             --text-secondary: #a0a0a0;
             --text-muted: #666b6e;
-            --gradient-primary: linear-gradient(135deg, #00d4ff 0%, #7209b7 100%);
-            --gradient-secondary: linear-gradient(135deg, #ff006e 0%, #00d4ff 100%);
-            --gradient-success: linear-gradient(135deg, #00ff88 0%, #00d4ff 100%);
-            --shadow-glow: 0 0 30px rgba(0, 212, 255, 0.3);
+            --gradient-primary: linear-gradient(135deg, #B98FFF 0%, #75009E 100%);
+            --gradient-secondary: linear-gradient(135deg, #8D63B8 0%, #B98FFF 100%);
+            --gradient-success: linear-gradient(135deg, #00ff88 0%, #B98FFF 100%);
+            --shadow-glow: 0 0 30px rgba(185, 143, 255, 0.3);
             --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.3);
-            --border-glow: 1px solid rgba(0, 212, 255, 0.5);
+            --border-glow: 1px solid rgba(185, 143, 255, 0.5);
             --border-radius: 16px;
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
@@ -125,16 +132,36 @@ if (isset($_SESSION['user_id'])) {
             box-sizing: border-box;
         }
 
-        /* Body */
+        /* Body — carrd background image (deep purple) with a soft overlay for contrast */
         body {
-            background: var(--dark-bg);
+            background-color: #1a0f33;
             background-image:
-                radial-gradient(circle at 20% 50%, rgba(120, 9, 183, 0.2) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(255, 0, 110, 0.2) 0%, transparent 50%),
-                radial-gradient(circle at 40% 80%, rgba(0, 212, 255, 0.2) 0%, transparent 50%);
+                linear-gradient(rgba(26, 15, 51, 0.55), rgba(12, 6, 26, 0.72)),
+                url('/assets/img/bg.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
             color: var(--text-primary);
-            font-family: 'Inter', sans-serif;
+            font-family: 'Courier Prime', 'Courier New', monospace;
             min-height: 100vh;
+        }
+
+        /* === Carrd-style typography === */
+        h1, h2, h3, h4,
+        .hero-title, .section-title, .projects-title, .project-title,
+        .brand-name, .stat-number, .profile-header h1, .timeline-title,
+        .tech-modal-title, .skill-title, .passion-title {
+            font-family: 'Big Shoulders Display', 'Inter', sans-serif !important;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .section-badge, .projects-badge {
+            font-family: 'Amatic SC', cursive !important;
+            font-size: 1.2rem !important;
+            font-weight: 700;
+            letter-spacing: 1.5px;
         }
 
         /* Particles Background */
@@ -215,13 +242,13 @@ if (isset($_SESSION['user_id'])) {
 
         .navbar-nav .nav-link:hover {
             color: var(--primary-color);
-            background: rgba(0, 212, 255, 0.1);
+            background: rgba(185, 143, 255, 0.1);
             text-decoration: none;
         }
 
         .navbar-nav .nav-link.active {
             color: var(--primary-color);
-            background: rgba(0, 212, 255, 0.2);
+            background: rgba(185, 143, 255, 0.2);
         }
 
         /* Main Content */
@@ -315,7 +342,7 @@ if (isset($_SESSION['user_id'])) {
         .btn-primary {
             background: var(--gradient-primary);
             color: white;
-            box-shadow: 0 4px 15px rgba(0, 212, 255, 0.4);
+            box-shadow: 0 4px 15px rgba(185, 143, 255, 0.4);
         }
 
         .btn-primary:hover {
@@ -494,7 +521,7 @@ if (isset($_SESSION['user_id'])) {
             background: var(--primary-color);
             color: white;
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 212, 255, 0.4);
+            box-shadow: 0 5px 15px rgba(185, 143, 255, 0.4);
         }
 
         .nav-title {
@@ -636,11 +663,11 @@ if (isset($_SESSION['user_id'])) {
 
         @keyframes glow {
             from {
-                text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+                text-shadow: 0 0 20px rgba(185, 143, 255, 0.5);
             }
 
             to {
-                text-shadow: 0 0 30px rgba(0, 212, 255, 0.8);
+                text-shadow: 0 0 30px rgba(185, 143, 255, 0.8);
             }
         }
 
@@ -683,7 +710,7 @@ if (isset($_SESSION['user_id'])) {
                 <!-- Logo / Brand -->
                 <a class="navbar-brand" href="<?= homeUrl() ?>">
                     <div class="brand-container">
-                        <span class="brand-icon">&lt;/&gt;</span>
+                        <span class="brand-icon">✦</span>
                         <div class="brand-text">
                             <h1 class="brand-name glow-effect"><?php echo $site_title; ?></h1>
                         </div>

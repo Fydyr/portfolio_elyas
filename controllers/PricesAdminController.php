@@ -2,6 +2,7 @@
 
 require_once 'BaseController.php';
 require_once __DIR__ . '/../includes/db.php';
+require_once __DIR__ . '/../includes/settings.php';
 
 class PricesAdminController extends BaseController
 {
@@ -19,7 +20,33 @@ class PricesAdminController extends BaseController
         $this->checkAuth();
         global $pdo;
         $prices = $pdo->query("SELECT * FROM price_items ORDER BY sort_order, id")->fetchAll(PDO::FETCH_ASSOC);
-        echo $this->view('admin_prices', compact('prices'));
+        $commissionStatus = setting('commission_status', 'open');
+        $commissionNote   = setting('commission_status_note', '');
+        echo $this->view('admin_prices', compact('prices', 'commissionStatus', 'commissionNote'));
+    }
+
+    /** Met à jour le statut des commissions affiché sur la page d'accueil. */
+    public function saveStatus(): void
+    {
+        $this->checkAuth();
+        global $pdo;
+
+        $status = (($_POST['commission_status'] ?? 'open') === 'closed') ? 'closed' : 'open';
+        $note   = trim($_POST['commission_status_note'] ?? '');
+
+        try {
+            $stmt = $pdo->prepare(
+                "INSERT INTO site_settings (`key`, `value`, `is_markdown`) VALUES (:k, :v, 0)
+                 ON DUPLICATE KEY UPDATE `value` = VALUES(`value`)"
+            );
+            $stmt->execute([':k' => 'commission_status',      ':v' => $status]);
+            $stmt->execute([':k' => 'commission_status_note', ':v' => $note]);
+            $_SESSION['success'] = 'Statut des commissions mis à jour.';
+        } catch (Exception $e) {
+            $_SESSION['error'] = 'Erreur: ' . $e->getMessage();
+        }
+        header('Location: ' . url('admin/prices'));
+        exit;
     }
 
     public function edit($id = null): void
@@ -48,7 +75,18 @@ class PricesAdminController extends BaseController
 
             try {
                 $pdo->prepare($sql)->execute($data);
-                $_SESSION['success'] = $id === null ? 'Tarif ajouté.' : 'Tarif modifié.';
+                $priceId = $id === null ? (int)$pdo->lastInsertId() : (int)$id;
+
+                // Lien réciproque avec une catégorie portfolio (1:1)
+                $catId = ($_POST['portfolio_category_id'] ?? '') !== '' ? (int)$_POST['portfolio_category_id'] : null;
+                $pdo->prepare("UPDATE portfolio_categories SET commission_id = NULL WHERE commission_id = :pid")
+                    ->execute([':pid' => $priceId]);
+                if ($catId !== null) {
+                    $pdo->prepare("UPDATE portfolio_categories SET commission_id = :pid WHERE id = :cid")
+                        ->execute([':pid' => $priceId, ':cid' => $catId]);
+                }
+
+                $_SESSION['success'] = $id === null ? 'Commission ajoutée.' : 'Commission modifiée.';
             } catch (Exception $e) {
                 $_SESSION['error'] = 'Erreur: ' . $e->getMessage();
             }
@@ -67,7 +105,20 @@ class PricesAdminController extends BaseController
                 exit;
             }
         }
-        echo $this->view('admin_price_edit', compact('price'));
+
+        // Catégories portfolio pour le sélecteur + catégorie déjà liée
+        $categories = [];
+        $linkedCategoryId = null;
+        try {
+            $categories = $pdo->query("SELECT id, name FROM portfolio_categories ORDER BY sort_order, name")->fetchAll(PDO::FETCH_ASSOC);
+            if ($id !== null) {
+                $st = $pdo->prepare("SELECT id FROM portfolio_categories WHERE commission_id = :id LIMIT 1");
+                $st->execute([':id' => $id]);
+                $linkedCategoryId = $st->fetchColumn() ?: null;
+            }
+        } catch (Exception $e) {}
+
+        echo $this->view('admin_price_edit', compact('price', 'categories', 'linkedCategoryId'));
     }
 
     public function delete(): void

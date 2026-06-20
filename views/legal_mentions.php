@@ -1,12 +1,12 @@
 <?php ob_start(); ?>
 
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mentions Légales - Enzo Fournier</title>
+    <title>Legal Notice - Fynt</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
@@ -24,110 +24,135 @@
         <div class="row justify-content-center mb-5">
             <div class="col-lg-10">
                 <div class="text-center mb-5">
-                    <h1 class="glow-effect">Mentions Légales</h1>
-                    <p class="lead text-secondary">Informations légales concernant ce site portfolio</p>
+                    <h1 class="glow-effect">Legal Notice</h1>
+                    <p class="lead text-secondary">Legal information and terms for this portfolio &amp; commission site</p>
                 </div>
             </div>
         </div>
 
         <div class="row justify-content-center">
             <div class="col-lg-10">
-                <!-- Identification de l'éditeur -->
+                <!-- Editor & content owner -->
                 <div class="card fade-in mb-4">
                     <div class="card-header">
                         <h2 class="mb-0">
                             <i class="fas fa-user-circle me-2"></i>
-                            Identification de l'éditeur
+                            Editor &amp; content owner
                         </h2>
                     </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-6">
-                                <p><strong class="text-primary">Nom/Dénomination sociale :</strong><br>
-                                    <span class="text-secondary">Enzo Fournier</span>
+                                <p class="mb-1"><strong class="text-primary">Artist &amp; content:</strong></p>
+                                <p>
+                                    <span class="text-secondary">Fynt (Fyntsu)</span><br>
+                                    <span><a href="https://discord.gg/DTvkz3BQHz" target="_blank" rel="noopener" class="text-secondary">Discord server</a> &middot; <a href="https://vgen.co/fyfyntt" target="_blank" rel="noopener" class="text-secondary">VGen</a></span>
                                 </p>
                             </div>
                             <div class="col-md-6">
-                                <p><strong class="text-primary">Email :</strong><br>
-                                    <span><a href="mailto:contact@enzofournier.com" class="text-secondary">enzofournier.contact@gmail.com</a></span>
+                                <p class="mb-1"><strong class="text-primary">Site editor &amp; developer:</strong></p>
+                                <p>
+                                    <span class="text-secondary">Enzo Fournier</span><br>
+                                    <a href="mailto:enzofournier.contact@gmail.com" class="text-secondary">enzofournier.contact@gmail.com</a><br>
+                                    <a href="https://enzo-f.aeroliths.fr" target="_blank" rel="noopener" class="text-secondary">enzo-f.aeroliths.fr</a><br>
+                                    <a href="https://github.com/Fydyr" target="_blank" rel="noopener" class="text-secondary">github.com/Fydyr</a>
                                 </p>
                             </div>
                         </div>
                         <div class="bg-glass p-3 rounded border-glow">
                             <i class="fas fa-info-circle me-2 text-info"></i>
-                            <strong class="text-primary">Directeur de la publication :</strong> <span class="text-secondary">Enzo Fournier</span>
+                            <strong class="text-primary">Publication manager:</strong> <span class="text-secondary">Enzo Fournier</span>
+                            &mdash; the artwork and brand shown on this site belong to Fynt.
                         </div>
                     </div>
                 </div>
 
-                <!-- Hébergement -->
+                <!-- Intellectual property -->
+                <div class="card fade-in mb-4">
+                    <div class="card-header">
+                        <h2 class="mb-0">
+                            <i class="fas fa-copyright me-2"></i>
+                            Intellectual property
+                        </h2>
+                    </div>
+                    <div class="card-body">
+                        <p>All artwork, 3D models, rigs, animations and other content shown on this site are created by and remain the property of Fynt, unless stated otherwise. They are protected by copyright.</p>
+
+                        <div class="bg-glass p-3 rounded border-glow mt-3">
+                            <i class="fas fa-exclamation-triangle me-2 text-warning"></i>
+                            <strong class="text-warning">Important:</strong> <span class="text-secondary">Do not repost, trace, edit, redistribute, use for AI training, or claim my work as your own without explicit permission. Commissioned work is delivered for the client's personal/streaming use as agreed; copyright stays with Fynt unless otherwise negotiated.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hosting -->
                 <div class="card slide-in-left mb-4">
                     <div class="card-header">
                         <h2 class="mb-0">
                             <i class="fas fa-server me-2"></i>
-                            Hébergement
+                            Hosting
                         </h2>
                     </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-4">
-                                <p><strong class="text-primary">Nom de l'hébergeur :</strong><br>
-                                    <span class="text-secondary"><a href="https://www.ionos.fr" target="_blank" class="text-decoration-none text-reset">IONOS SARL</a></span>
+                                <p><strong class="text-primary">Host:</strong><br>
+                                    <span class="text-secondary"><a href="https://www.ionos.fr" target="_blank" rel="noopener" class="text-decoration-none text-reset">IONOS SARL</a></span>
                                 </p>
                             </div>
                             <div class="col-md-4">
-                                <p><strong class="text-primary">Adresse :</strong><br>
+                                <p><strong class="text-primary">Address:</strong><br>
                                     <span class="text-secondary">7 place de la Gare, 57200 Sarreguemines, France</span>
                                 </p>
                             </div>
                             <div class="col-md-4">
-                                <p><strong class="text-primary">Lien de l'hébergeur :</strong><br>
-                                    <span class="text-secondary"><a href="https://www.ionos.fr" target="_blank" class="text-decoration-none text-reset">https://www.ionos.fr</a></span>
+                                <p><strong class="text-primary">Website:</strong><br>
+                                    <span class="text-secondary"><a href="https://www.ionos.fr" target="_blank" rel="noopener" class="text-decoration-none text-reset">https://www.ionos.fr</a></span>
                                 </p>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Propriété intellectuelle -->
-                <div class="card fade-in mb-4">
+                <!-- Commission terms -->
+                <div class="card slide-in-left mb-4">
                     <div class="card-header">
                         <h2 class="mb-0">
-                            <i class="fas fa-copyright me-2"></i>
-                            Propriété intellectuelle
+                            <i class="fas fa-file-signature me-2"></i>
+                            Commission terms
                         </h2>
                     </div>
                     <div class="card-body">
-                        <p>L'ensemble de ce site relève de la législation française et internationale sur le droit d'auteur et la propriété intellectuelle. Tous les droits de reproduction sont réservés, y compris pour les documents téléchargeables et les représentations iconographiques et photographiques.</p>
-
-                        <div class="bg-glass p-3 rounded border-glow mt-3">
-                            <i class="fas fa-exclamation-triangle me-2 text-warning"></i>
-                            <strong class="text-warning">Important :</strong> <span class="text-secondary">La reproduction de tout ou partie de ce site sur un support électronique quel qu'il soit est formellement interdite sauf autorisation expresse du directeur de la publication.</span>
-                        </div>
+                        <ul class="mb-0" style="color: var(--text-secondary);">
+                            <li>Commissions are ordered through <a href="https://vgen.co/fyfyntt" target="_blank" rel="noopener" class="text-primary">VGen</a>; payment is in EUR up front via PayPal or Ko-fi.</li>
+                            <li>Prices are starting estimates and may change with complexity and the number of revisions.</li>
+                            <li>Progress and the queue are tracked on the <a href="https://boards.superthread.com/b/fe2b7e90-e901-42cf-b57a-0ecc5607e59c" target="_blank" rel="noopener" class="text-primary">commission board</a>.</li>
+                            <li>Refund and revision policies are agreed per commission before work starts.</li>
+                        </ul>
                     </div>
                 </div>
 
-                <!-- Protection des données personnelles -->
+                <!-- Data protection -->
                 <div class="card slide-in-left mb-4">
                     <div class="card-header">
                         <h2 class="mb-0">
                             <i class="fas fa-shield-alt me-2"></i>
-                            Protection des données personnelles
+                            Data &amp; privacy
                         </h2>
                     </div>
                     <div class="card-body">
-                        <p>Ce site portfolio respecte votre vie privée et limite la collecte de données au strict minimum.</p>
+                        <p>This site respects your privacy and keeps data collection to a strict minimum.</p>
 
-                        <div class="bg-glass p-3 rounded mb-4" style="border: 1px solid rgba(59, 130, 246, 0.3);">
+                        <div class="bg-glass p-3 rounded mb-4" style="border: 1px solid rgba(185, 143, 255, 0.3);">
                             <h5 style="color: var(--info-color);">
                                 <i class="fas fa-database me-2"></i>
-                                Données collectées
+                                Data collected
                             </h5>
-                            <p class="mb-2" style="color: var(--text-secondary);">Ce site collecte <strong style="color: var(--text-primary);">uniquement</strong> :</p>
+                            <p class="mb-2" style="color: var(--text-secondary);">This site collects <strong style="color: var(--text-primary);">only</strong>:</p>
                             <ul class="mb-0" style="color: var(--text-secondary);">
-                                <li><strong style="color: var(--text-primary);">Le nombre total de visiteurs</strong> : Un compteur anonyme et global du nombre de visites sur le site, sans aucune information personnelle identifiable</li>
-                                <li><strong style="color: var(--text-primary);">Les données du formulaire de contact</strong> (nom, email, message) : Uniquement si vous choisissez de nous contacter volontairement</li>
-                                <li><strong style="color: var(--text-primary);">L'adresse IP et l'identifiant utilisé lors des tentatives de connexion à l'espace d'administration</strong> : Uniquement à des fins de sécurité (limitation des attaques par force brute). Aucune IP n'est collectée lors de la navigation classique sur le site.</li>
+                                <li><strong style="color: var(--text-primary);">A total visitor count</strong>: an anonymous, global counter with no personally identifiable information.</li>
+                                <li><strong style="color: var(--text-primary);">Contact form data</strong> (name, email, message): only if you choose to contact me through the form.</li>
+                                <li><strong style="color: var(--text-primary);">IP and username on admin login attempts</strong>: for security only (brute-force protection). No IP is collected during normal browsing.</li>
                             </ul>
                         </div>
 
@@ -136,24 +161,24 @@
                                 <div class="bg-glass p-3 rounded mb-3">
                                     <h5 class="text-primary">
                                         <i class="fas fa-bullseye me-2"></i>
-                                        Finalité
+                                        Purpose
                                     </h5>
                                     <p class="mb-0">
-                                        <strong>Compteur de visiteurs :</strong> Statistique globale et anonyme d'audience<br>
-                                        <strong>Formulaire de contact :</strong> Répondre à vos demandes de contact<br>
-                                        <strong>Logs d'authentification :</strong> Détecter et bloquer les tentatives répétées de connexion non autorisées
+                                        <strong>Visitor counter:</strong> anonymous, aggregate audience stats<br>
+                                        <strong>Contact form:</strong> replying to your messages<br>
+                                        <strong>Login logs:</strong> detecting and blocking unauthorised access attempts
                                     </p>
                                 </div>
 
                                 <div class="bg-glass p-3 rounded mb-3">
                                     <h5 class="text-primary">
                                         <i class="fas fa-clock me-2"></i>
-                                        Conservation
+                                        Retention
                                     </h5>
                                     <p class="mb-0">
-                                        <strong>Compteur :</strong> Conservé indéfiniment (nombre total anonyme)<br>
-                                        <strong>Données de contact :</strong> Conservées le temps nécessaire pour traiter votre demande, puis supprimées<br>
-                                        <strong>Logs d'authentification :</strong> Supprimés automatiquement au bout de 24 heures
+                                        <strong>Counter:</strong> kept indefinitely (anonymous total)<br>
+                                        <strong>Contact data:</strong> kept only as long as needed to handle your request, then deleted<br>
+                                        <strong>Login logs:</strong> automatically deleted after 24 hours
                                     </p>
                                 </div>
                             </div>
@@ -161,89 +186,54 @@
                                 <div class="bg-glass p-3 rounded mb-3">
                                     <h5 class="text-primary">
                                         <i class="fas fa-user-shield me-2"></i>
-                                        Vos droits
+                                        Your rights
                                     </h5>
-                                    <p class="mb-0">Conformément au RGPD, vous disposez d'un droit d'accès, de rectification et de suppression de vos données personnelles (formulaire de contact).</p>
+                                    <p class="mb-0">Under the GDPR you have a right to access, rectify and delete your personal data (contact form).</p>
                                 </div>
 
                                 <div class="bg-glass p-3 rounded">
                                     <h5 class="text-primary">
                                         <i class="fas fa-user-tie me-2"></i>
-                                        Responsable du traitement
+                                        Data controller
                                     </h5>
-                                    <p class="mb-0">Enzo Fournier</p>
+                                    <p class="mb-0">Enzo Fournier (site editor)</p>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="bg-glass p-3 rounded mt-3" style="border: 1px solid rgba(59, 130, 246, 0.3);">
-                            <i class="fas fa-info-circle me-2" style="color: var(--info-color);"></i>
-                            <strong style="color: var(--info-color);">Information importante :</strong> <span style="color: var(--text-secondary);">Lors de la navigation classique sur le site, aucune adresse IP, aucun identifiant unique et aucune donnée de navigation ne sont collectés. Le compteur de visiteurs est purement statistique et totalement anonyme. L'adresse IP n'est enregistrée que de manière temporaire (24 h) lors d'une tentative de connexion à l'espace d'administration, à des fins exclusives de sécurité.</span>
-                        </div>
-
                         <div class="bg-glass p-3 rounded mt-3" style="border: 1px solid rgba(16, 185, 129, 0.3);">
                             <i class="fas fa-envelope me-2" style="color: var(--success-color);"></i>
-                            <strong style="color: var(--success-color);">Contact pour vos droits :</strong> <span style="color: var(--text-secondary);">Pour exercer vos droits, contactez-moi à l'adresse : <strong style="color: var(--primary-color);">enzofournier.contact@gmail.com</strong></span>
+                            <strong style="color: var(--success-color);">Exercise your rights:</strong> <span style="color: var(--text-secondary);">Email the site editor at <a href="mailto:enzofournier.contact@gmail.com" class="text-primary">enzofournier.contact@gmail.com</a> to request access or deletion of your data.</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Cookies et technologies de suivi -->
+                <!-- Cookies -->
                 <div class="card fade-in mb-4">
                     <div class="card-header">
                         <h2 class="mb-0">
                             <i class="fas fa-cookie-bite me-2"></i>
-                            Cookies et technologies de suivi
+                            Cookies &amp; tracking
                         </h2>
                     </div>
                     <div class="card-body">
                         <div class="bg-glass p-3 rounded mb-3" style="border: 1px solid rgba(16, 185, 129, 0.3);">
                             <i class="fas fa-check-circle me-2" style="color: var(--success-color);"></i>
-                            <strong style="color: var(--success-color);">Aucun cookie de tracking !</strong> <span style="color: var(--text-secondary);">Ce site n'utilise aucun cookie publicitaire ni de mesure d'audience. Aucun service tiers de tracking n'est intégré. Un unique cookie technique de session (<code>PHPSESSID</code>) est utilisé, strictement nécessaire au bon fonctionnement du site (notamment pour distinguer les visiteurs uniques du compteur et maintenir une session d'administration). Ce cookie expire à la fermeture du navigateur et ne contient aucune donnée personnelle.</span>
-                        </div>
-
-                        <div class="bg-glass p-3 rounded" style="border: 1px solid rgba(59, 130, 246, 0.3);">
-                            <h5 class="mb-3" style="color: var(--primary-color);">
-                                <i class="fas fa-chart-line me-2"></i>
-                                Technologies utilisées
-                            </h5>
-                            <p class="mb-2" style="color: var(--text-secondary);"><strong style="color: var(--text-primary);">Compteur de visiteurs :</strong></p>
-                            <ul class="mb-0" style="color: var(--text-secondary);">
-                                <li>Simple compteur stocké côté serveur</li>
-                                <li>Aucun cookie déposé sur votre appareil</li>
-                                <li>Aucune donnée personnelle collectée</li>
-                                <li>Aucun suivi de navigation</li>
-                                <li>Données 100% anonymes et agrégées</li>
-                            </ul>
+                            <strong style="color: var(--success-color);">No tracking cookies!</strong> <span style="color: var(--text-secondary);">This site uses no advertising or analytics cookies and no third-party trackers. A single technical session cookie (<code>PHPSESSID</code>) is used, strictly necessary for the site to work (counting unique visitors and keeping an admin session). It expires when you close your browser and holds no personal data.</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Limitation de responsabilité -->
+                <!-- Liability -->
                 <div class="card slide-in-left mb-4">
                     <div class="card-header">
                         <h2 class="mb-0">
                             <i class="fas fa-exclamation-circle me-2"></i>
-                            Limitation de responsabilité
+                            Limitation of liability
                         </h2>
                     </div>
                     <div class="card-body">
-                        <p>Les informations contenues sur ce site sont aussi précises que possible et le site est périodiquement remis à jour, mais peut toutefois contenir des inexactitudes, des omissions ou des lacunes.</p>
-
-                        <p class="mb-0">Enzo Fournier ne pourra en aucun cas être tenu responsable de tout dommage de quelque nature qu'il soit résultant de l'interprétation ou de l'utilisation des informations et/ou documents disponibles sur ce site.</p>
-                    </div>
-                </div>
-
-                <!-- Droit applicable -->
-                <div class="card fade-in mb-4">
-                    <div class="card-header">
-                        <h2 class="mb-0">
-                            <i class="fas fa-balance-scale me-2"></i>
-                            Droit applicable
-                        </h2>
-                    </div>
-                    <div class="card-body">
-                        <p class="mb-0">Les présentes mentions légales sont régies par le droit français. En cas de litige, les tribunaux français seront seuls compétents.</p>
+                        <p class="mb-0">The information on this site is provided as accurately as possible and is updated regularly, but may still contain errors or omissions. Fynt cannot be held liable for any damage resulting from the use or interpretation of the information on this site.</p>
                     </div>
                 </div>
 
@@ -251,32 +241,25 @@
                 <div class="card slide-in-left mb-4">
                     <div class="card-header">
                         <h2 class="mb-0">
-                            <i class="fas fa-phone me-2"></i>
+                            <i class="fas fa-comment-dots me-2"></i>
                             Contact
                         </h2>
                     </div>
                     <div class="card-body">
-                        <p>Pour toute question concernant ce site portfolio, vous pouvez me contacter :</p>
+                        <p>For any question about this site, you can reach me:</p>
                         <div class="d-flex align-items-center">
-                            <i class="fas fa-envelope text-primary me-3"></i>
-                            <span class="text-secondary"><strong class="text-success">Par email :</strong> <a href="mailto:contact@enzofournier.com" class="text-primary">enzofournier.contact@gmail.com</a></span>
+                            <i class="fab fa-discord text-primary me-3"></i>
+                            <span class="text-secondary"><strong class="text-success">On Discord:</strong> <a href="https://discord.gg/DTvkz3BQHz" target="_blank" rel="noopener" class="text-primary">join the server</a></span>
                         </div>
                     </div>
                 </div>
 
                 <!-- Footer de la page -->
                 <div class="text-center mt-5">
-                    <div class="bg-glass p-3 rounded">
-                        <p class="mb-0 text-info">
-                            <i class="fas fa-calendar-alt me-2"></i>
-                            <strong>Dernière mise à jour :</strong> 19 juin 2026
-                        </p>
-                    </div>
-
                     <div class="mt-4">
                         <a href="/" class="btn btn-primary">
                             <i class="fas fa-home me-2"></i>
-                            Retour à l'accueil
+                            Back to home
                         </a>
                     </div>
                 </div>

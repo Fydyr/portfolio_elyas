@@ -1,12 +1,12 @@
 <?php ob_start(); ?>
 
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Connexion - Enzo Fournier</title>
+    <title>Login - Fynt</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
@@ -24,12 +24,12 @@
         <div class="profile-avatar">
             <i class="bi bi-laptop"></i>
         </div>
-        <h1>Connexion</h1>
-        <h2>Page de connexion</h2>
+        <h1>Login</h1>
+        <h2>Admin login</h2>
     </div>
     <div class="container">
         <?php if (isset($_SESSION['user_id'])): ?>
-            <div class="alert alert-info">Vous êtes déjà connecté.</div>
+            <div class="alert alert-info">You are already logged in.</div>
         <?php else: ?>
             <!-- ...formulaire de connexion... -->
         <?php endif; ?>
@@ -48,10 +48,10 @@
                             <input type="email" class="form-control" id="email" name="email" required>
                         </div>
                         <div class="mb-3">
-                            <label for="mdp" class="form-label">Mot de passe</label>
+                            <label for="mdp" class="form-label">Password</label>
                             <input type="password" class="form-control" id="mdp" name="mdp" required>
                         </div>
-                        <button type="submit" class="btn btn-primary">Se connecter</button>
+                        <button type="submit" class="btn btn-primary">Log in</button>
                     </form>
                 </div>
             </div>

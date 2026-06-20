@@ -2,6 +2,7 @@
 
 require_once 'BaseController.php';
 require_once __DIR__ . '/../includes/db.php';
+require_once __DIR__ . '/../includes/settings.php';
 
 class HomeController extends BaseController
 {
@@ -10,7 +11,11 @@ class HomeController extends BaseController
     {
         global $pdo;
 
-        $projectCount = (int)$pdo->query("SELECT COUNT(*) FROM projects WHERE visibilite = 1")->fetchColumn();
+        $projectCount = (int)$pdo->query("SELECT COUNT(*) FROM portfolio_images")->fetchColumn();
+
+        // Statut des commissions (éditable via /admin/prices)
+        $commissionStatus = setting('commission_status', 'open');
+        $commissionNote   = setting('commission_status_note', '');
 
         // Catégories visibles + leurs skills visibles
         $categories = $pdo->query(
@@ -51,6 +56,6 @@ class HomeController extends BaseController
         }
         $jsonLdContext = ['skills_names' => $skillNames];
 
-        echo $this->view('home', compact('projectCount', 'categories', 'skillsByCategory', 'passions', 'languageCount', 'jsonLdContext'));
+        echo $this->view('home', compact('projectCount', 'categories', 'skillsByCategory', 'passions', 'languageCount', 'jsonLdContext', 'commissionStatus', 'commissionNote'));
     }
 }

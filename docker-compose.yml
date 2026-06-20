@@ -52,6 +52,7 @@ services:
       ADMIN_PASSWORD: "${ADMIN_PASSWORD:-}"
     volumes:
       - ./assets/img/projects:/var/www/html/assets/img/projects
+      - ./assets/img/portfolio:/var/www/html/assets/img/portfolio
       - ./assets/docs:/var/www/html/assets/docs
     labels:
       - traefik.enable=true

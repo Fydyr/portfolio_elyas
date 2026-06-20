@@ -27,7 +27,7 @@ RUN composer install --no-dev --no-interaction --no-progress --optimize-autoload
 
 COPY . .
 
-RUN mkdir -p assets/img/projects assets/docs \
+RUN mkdir -p assets/img/projects assets/img/portfolio assets/docs \
     && chown -R www-data:www-data /var/www/html
 
 COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh

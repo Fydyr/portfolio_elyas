@@ -10,10 +10,10 @@
  * une image, un type article, etc., qui surchargent les valeurs par défaut.
  */
 
-const SITE_NAME       = 'Portfolio Enzo Fournier';
-const SITE_AUTHOR     = 'Enzo Fournier';
-const SITE_TWITTER    = '@fydyr9';
-const SITE_LOCALE     = 'fr_FR';
+const SITE_NAME       = 'Fynt — VTuber, Artist & Live2D Rigger';
+const SITE_AUTHOR     = 'Fynt';
+const SITE_TWITTER    = '@_FoxBee';
+const SITE_LOCALE     = 'en_US';
 const SITE_DEFAULT_OG = '/assets/img/img_logo.png';
 
 /**
@@ -42,38 +42,38 @@ function pagesMetaCatalog(): array
 {
     return [
         'index' => [
-            'title'       => 'Enzo Fournier - Développeur Web & Étudiant BUT Informatique',
-            'description' => "Portfolio d'Enzo Fournier, étudiant en 3e année de BUT Informatique passionné par le développement web backend et la création d'applications. Découvrez mon parcours, mes compétences et mes projets.",
+            'title'       => 'Fynt — VTuber, Animator, Artist & Live2D Rigger',
+            'description' => "Portfolio of Fynt (Fyntsu): VTuber artist specialising in 3D modelling, Live2D rigging, animation, art and emotes for streamers and creators. Commissions open.",
             'type'        => 'profile',
         ],
         'home' => [
-            'title'       => 'Enzo Fournier - Développeur Web & Étudiant BUT Informatique',
-            'description' => "Portfolio d'Enzo Fournier, étudiant en 3e année de BUT Informatique passionné par le développement web backend et la création d'applications.",
+            'title'       => 'Fynt — VTuber, Animator, Artist & Live2D Rigger',
+            'description' => "Portfolio of Fynt (Fyntsu): VTuber artist specialising in 3D modelling, Live2D rigging, animation, art and emotes for streamers and creators.",
             'type'        => 'profile',
         ],
         'projects' => [
-            'title'       => 'Mes projets - Portfolio Enzo Fournier',
-            'description' => "Tous les projets web, applications et créations que j'ai réalisés en personnel ou pendant mon BUT Informatique. Technologies, captures et code source.",
+            'title'       => 'Portfolio - Fynt',
+            'description' => "Selected work by Fynt: 3D VTuber models, Live2D rigs, animations, illustrations and emotes.",
             'type'        => 'website',
         ],
         'about' => [
-            'title'       => 'À propos - Enzo Fournier',
-            'description' => "Étudiant en BUT Informatique, développeur web backend. Mon parcours, mes compétences, mes derniers projets GitHub et ce qui me motive.",
+            'title'       => 'About - Fynt',
+            'description' => "Fynt (Fyntsu) is a VTuber artist working across 3D modelling, Live2D rigging, animation and illustration. Learn more and get in touch.",
             'type'        => 'profile',
         ],
         'contact' => [
-            'title'       => 'Me contacter - Enzo Fournier',
-            'description' => "Une question, un projet, une opportunité de stage ou d'alternance ? Contactez-moi directement via le formulaire ou sur mes réseaux.",
+            'title'       => 'Contact - Fynt',
+            'description' => "Want a commission or just to say hi? Reach Fynt on Discord, VGen and social media.",
             'type'        => 'website',
         ],
         'legal-mention' => [
-            'title'       => 'Mentions légales - Portfolio Enzo Fournier',
-            'description' => "Mentions légales du portfolio d'Enzo Fournier : éditeur, hébergement, propriété intellectuelle et protection des données.",
+            'title'       => 'Legal notice - Fynt',
+            'description' => "Legal notice and terms for Fynt's portfolio: editor, intellectual property and data protection.",
             'type'        => 'website',
         ],
         'price' => [
-            'title'       => 'Tarifs & prestations - Enzo Fournier',
-            'description' => "Tarifs de mes prestations de développement web : sites vitrine, portfolios, applications mobiles, refonte et maintenance. Devis personnalisés sur demande.",
+            'title'       => 'Commissions - Fynt',
+            'description' => "Commission prices for Fynt: 3D modelling, animation, Live2D rigging, PSD making, art and emotes. Open via VGen.",
             'type'        => 'website',
         ],
         'login' => [
@@ -98,7 +98,7 @@ function getPageMeta(string $page = 'index', array $custom = []): array
 {
     $defaults = [
         'title'        => SITE_NAME,
-        'description'  => SITE_NAME . " - développeur web passionné.",
+        'description'  => SITE_NAME . " - VTuber artist & Live2D rigger.",
         'image'        => SITE_DEFAULT_OG,
         'type'         => 'website',
         'twitter_card' => 'summary_large_image',
@@ -196,26 +196,28 @@ function renderJsonLd(string $page, array $context = []): void
             '@context'    => 'https://schema.org',
             '@type'       => 'Person',
             'name'        => SITE_AUTHOR,
+            'alternateName' => 'Fyntsu',
             'url'         => $base . '/',
             'image'       => absoluteUrl(SITE_DEFAULT_OG),
-            'jobTitle'    => 'Étudiant en BUT Informatique',
-            'description' => "Étudiant en 3e année de BUT Informatique, développeur web backend et créateur d'applications.",
+            'jobTitle'    => 'VTuber Artist & Live2D Rigger',
+            'description' => "VTuber artist specialising in 3D modelling, Live2D rigging, animation and illustration.",
             'sameAs'      => [
-                'https://github.com/Fydyr',
-                'https://www.linkedin.com/in/enzo-fournier-2746ba2b3/',
+                'https://vgen.co/fyfyntt',
+                'https://twitter.com/_FoxBee',
+                'https://www.instagram.com/fyfyntt/',
+                'https://www.youtube.com/@Fynt_Elyas',
+                'https://www.twitch.tv/fyfyntt',
+                'https://www.artstation.com/fyntsu/profile',
+                'https://ko-fi.com/fyntsu',
             ],
             'knowsAbout' => $context['skills_names'] ?? [],
-            'alumniOf'   => [
-                '@type' => 'CollegeOrUniversity',
-                'name'  => 'IUT de Calais - BUT Informatique',
-            ],
         ];
         $blocks[] = [
             '@context' => 'https://schema.org',
             '@type'    => 'WebSite',
             'name'     => SITE_NAME,
             'url'      => $base . '/',
-            'inLanguage' => 'fr-FR',
+            'inLanguage' => 'en',
         ];
     }
 
@@ -236,10 +238,10 @@ function renderJsonLd(string $page, array $context = []): void
 
     // Fil d'Ariane pour les pages secondaires
     $breadcrumbs = [
-        'projects'      => [['Accueil', '/'], ['Projets', '/projects']],
-        'contact'       => [['Accueil', '/'], ['Contact', '/contact']],
-        'legal-mention' => [['Accueil', '/'], ['Mentions légales', '/legal-mention']],
-        'price'         => [['Accueil', '/'], ['Tarifs', '/price']],
+        'projects'      => [['Home', '/'], ['Portfolio', '/projects']],
+        'contact'       => [['Home', '/'], ['Contact', '/contact']],
+        'legal-mention' => [['Home', '/'], ['Legal notice', '/legal-mention']],
+        'price'         => [['Home', '/'], ['Commissions', '/price']],
     ];
     if (isset($breadcrumbs[$page])) {
         $items = [];
@@ -263,8 +265,8 @@ function renderJsonLd(string $page, array $context = []): void
             '@context'        => 'https://schema.org',
             '@type'           => 'BreadcrumbList',
             'itemListElement' => [
-                ['@type' => 'ListItem', 'position' => 1, 'name' => 'Accueil', 'item' => $base . '/'],
-                ['@type' => 'ListItem', 'position' => 2, 'name' => 'Projets', 'item' => $base . '/projects'],
+                ['@type' => 'ListItem', 'position' => 1, 'name' => 'Home', 'item' => $base . '/'],
+                ['@type' => 'ListItem', 'position' => 2, 'name' => 'Portfolio', 'item' => $base . '/projects'],
                 ['@type' => 'ListItem', 'position' => 3, 'name' => $context['project']['title'] ?? '', 'item' => $base . '/project-detail/' . ($context['project']['id'] ?? '')],
             ],
         ];

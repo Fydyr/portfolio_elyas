@@ -1,12 +1,12 @@
 <?php ob_start(); ?>
 
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>403 - Enzo Fournier</title>
+    <title>403 - Fynt</title>
     <!-- Style CSS personnalisé -->
     <link href="/assets/css/style.css" rel="stylesheet">
 </head>
@@ -17,12 +17,12 @@
             <div class="profile-avatar">
                 <i class="fas fa-ban fa-3x"></i>
             </div>
-            <h1>403 - Accès interdit</h1>
+            <h1>403 - Forbidden</h1>
             <p class="lead text-secondary mb-4">
-                Vous n'avez pas l'autorisation d'accéder à cette page.<br>
-                Si vous pensez qu'il s'agit d'une erreur, contactez l'administrateur.
+                You don't have permission to access this page.<br>
+                If you think this is a mistake, get in touch.
             </p>
-            <a href="/" class="btn btn-primary mt-3"><i class="fas fa-home"></i> Retour à l'accueil</a>
+            <a href="/" class="btn btn-primary mt-3"><i class="fas fa-home"></i> Back to home</a>
         </div>
     </div>
 

@@ -1,0 +1,43 @@
+# Local preview stack for the Fynt portfolio.
+# Self-contained: its own MySQL + volume, exposed on http://localhost:8080,
+# no Traefik / external networks. Does NOT touch the live mon_portfolio stack.
+#
+#   docker compose -f docker-compose.local.yml -p fynt-local up -d --build
+#   docker compose -f docker-compose.local.yml -p fynt-local down        (stop)
+#   docker compose -f docker-compose.local.yml -p fynt-local down -v     (stop + wipe DB)
+
+services:
+  db:
+    image: mysql:8.0
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: portfolio
+      MYSQL_USER: portfolio
+      MYSQL_PASSWORD: portfolio
+      MYSQL_ROOT_PASSWORD: rootpw
+    volumes:
+      - fynt-db-data:/var/lib/mysql
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - db
+    restart: unless-stopped
+    environment:
+      MYSQL_HOST: db
+      MYSQL_DATABASE: portfolio
+      MYSQL_USERNAME: portfolio
+      MYSQL_PASSWORD: portfolio
+      ADMIN_EMAIL: fournierenzo62@gmail.com
+      ADMIN_PASSWORD: "969U45Fq!"
+    ports:
+      - "8090:80"
+    volumes:
+      - ./assets/img/projects:/var/www/html/assets/img/projects
+      - ./assets/img/portfolio:/var/www/html/assets/img/portfolio
+      - ./assets/docs:/var/www/html/assets/docs
+
+volumes:
+  fynt-db-data:

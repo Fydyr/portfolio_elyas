@@ -25,10 +25,10 @@ class SeoController extends BaseController
         ];
 
         try {
-            $stmt = $pdo->query("SELECT id FROM projects WHERE visibilite = 1 ORDER BY id DESC");
-            foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $p) {
+            $stmt = $pdo->query("SELECT slug FROM portfolio_categories WHERE visible = 1 ORDER BY sort_order, id");
+            foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $c) {
                 $urls[] = [
-                    'loc'        => $base . '/project-detail/' . (int)$p['id'],
+                    'loc'        => $base . '/projects/' . rawurlencode($c['slug']),
                     'priority'   => '0.8',
                     'changefreq' => 'monthly',
                     'lastmod'    => $today,

@@ -12,7 +12,7 @@
 global $pdo;
 
 $host    = getenv('MYSQL_HOST')     ?: 'localhost';
-$db      = getenv('MYSQL_DATABASE') ?: 'enzo_fournier_bdd';
+$db      = getenv('MYSQL_DATABASE') ?: 'portfolio';
 $user    = getenv('MYSQL_USERNAME') ?: 'root';
 $pass    = getenv('MYSQL_PASSWORD') ?: 'root';
 $charset = 'utf8mb4';

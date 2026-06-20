@@ -44,18 +44,16 @@ $router->get('/about', function () {
     (new AboutController())->index();
 });
 
-// Page des projets (correspond à /index.php/projects)
+// Page Portfolio : grille des catégories
 $router->get('/projects', function () {
-    include_once './controllers/ProjectsController.php';
-    $controller = new ProjectsController();
-    $controller->projects();
+    include_once './controllers/PortfolioController.php';
+    (new PortfolioController())->index();
 });
 
-// Détail d'un projet (correspond à /index.php/project-detail/{id})
-$router->get('/project-detail/(\d+)', function ($id) {
-    include_once './controllers/ProjectsController.php';
-    $controller = new ProjectsController();
-    $controller->projectDetail($id);
+// Galerie d'une catégorie de portfolio (par slug)
+$router->get('/projects/([a-zA-Z0-9-]+)', function ($slug) {
+    include_once './controllers/PortfolioController.php';
+    (new PortfolioController())->category($slug);
 });
 
 // Page de contact (correspond à /index.php/contact)
@@ -118,45 +116,6 @@ $router->get('/admin', function () {
     $controller->admin();
 });
 
-// Page d'ajout de projet (correspond à /index.php/admin/add-project)
-$router->get('/admin/add-project', function () {
-    include_once 'controllers/AdminController.php';
-    $controller = new AdminController();
-    $controller->addProject();
-});
-
-$router->post('/admin/add-project', function () {
-    include_once 'controllers/AdminController.php';
-    $controller = new AdminController();
-    $controller->addProject();
-});
-
-// page de gestion des projets (correspond à /index.php/admin/projects)
-$router->get('/admin/projects', function () {
-    include_once 'controllers/AdminController.php';
-    $controller = new AdminController();
-    $controller->listProjects();
-});
-
-$router->post('/admin/projects', function () {
-    include_once 'controllers/AdminController.php';
-    $controller = new AdminController();
-    $controller->listProjects();
-});
-
-// Page d'édition de projet (correspond à /index.php/admin/projects/edit-project/{id})
-$router->get('/admin/projects/edit-project/(\d+)', function ($id) {
-    include_once 'controllers/AdminController.php';
-    $controller = new AdminController();
-    $controller->editProject($id);
-});
-
-$router->post('/admin/projects/edit-project/(\d+)', function ($id) {
-    include_once 'controllers/AdminController.php';
-    $controller = new AdminController();
-    $controller->editProject($id);
-});
-
 // ===== Admin Skills =====
 $router->get('/admin/skills', function () {
     include_once 'controllers/SkillsAdminController.php';
@@ -203,32 +162,6 @@ $router->post('/admin/skills/category/delete', function () {
     (new SkillsAdminController())->deleteCategory();
 });
 
-// ===== Admin Passions =====
-$router->get('/admin/passions', function () {
-    include_once 'controllers/PassionsAdminController.php';
-    (new PassionsAdminController())->index();
-});
-$router->get('/admin/passions/add', function () {
-    include_once 'controllers/PassionsAdminController.php';
-    (new PassionsAdminController())->edit(null);
-});
-$router->post('/admin/passions/add', function () {
-    include_once 'controllers/PassionsAdminController.php';
-    (new PassionsAdminController())->edit(null);
-});
-$router->get('/admin/passions/edit/(\d+)', function ($id) {
-    include_once 'controllers/PassionsAdminController.php';
-    (new PassionsAdminController())->edit($id);
-});
-$router->post('/admin/passions/edit/(\d+)', function ($id) {
-    include_once 'controllers/PassionsAdminController.php';
-    (new PassionsAdminController())->edit($id);
-});
-$router->post('/admin/passions/delete', function () {
-    include_once 'controllers/PassionsAdminController.php';
-    (new PassionsAdminController())->delete();
-});
-
 // ===== Admin About =====
 $router->get('/admin/about', function () {
     include_once 'controllers/AboutAdminController.php';
@@ -259,24 +192,14 @@ $router->post('/admin/about/section/delete', function () {
     (new AboutAdminController())->deleteSection();
 });
 
-// ===== Admin CV =====
-$router->get('/admin/cv', function () {
-    include_once 'controllers/CvAdminController.php';
-    (new CvAdminController())->index();
-});
-$router->post('/admin/cv/upload', function () {
-    include_once 'controllers/CvAdminController.php';
-    (new CvAdminController())->upload();
-});
-$router->post('/admin/cv/delete', function () {
-    include_once 'controllers/CvAdminController.php';
-    (new CvAdminController())->delete();
-});
-
 // ===== Admin Prices =====
 $router->get('/admin/prices', function () {
     include_once 'controllers/PricesAdminController.php';
     (new PricesAdminController())->index();
+});
+$router->post('/admin/prices/status', function () {
+    include_once 'controllers/PricesAdminController.php';
+    (new PricesAdminController())->saveStatus();
 });
 $router->get('/admin/prices/add', function () {
     include_once 'controllers/PricesAdminController.php';
@@ -297,6 +220,56 @@ $router->post('/admin/prices/edit/(\d+)', function ($id) {
 $router->post('/admin/prices/delete', function () {
     include_once 'controllers/PricesAdminController.php';
     (new PricesAdminController())->delete();
+});
+
+// ===== Admin Portfolio =====
+$router->get('/admin/portfolio', function () {
+    include_once 'controllers/PortfolioAdminController.php';
+    (new PortfolioAdminController())->index();
+});
+$router->get('/admin/portfolio/add', function () {
+    include_once 'controllers/PortfolioAdminController.php';
+    (new PortfolioAdminController())->edit(null);
+});
+$router->post('/admin/portfolio/add', function () {
+    include_once 'controllers/PortfolioAdminController.php';
+    (new PortfolioAdminController())->edit(null);
+});
+$router->post('/admin/portfolio/delete', function () {
+    include_once 'controllers/PortfolioAdminController.php';
+    (new PortfolioAdminController())->delete();
+});
+$router->post('/admin/portfolio/image/update', function () {
+    include_once 'controllers/PortfolioAdminController.php';
+    (new PortfolioAdminController())->updateImage();
+});
+$router->post('/admin/portfolio/image/delete', function () {
+    include_once 'controllers/PortfolioAdminController.php';
+    (new PortfolioAdminController())->deleteImage();
+});
+$router->post('/admin/portfolio/cover', function () {
+    include_once 'controllers/PortfolioAdminController.php';
+    (new PortfolioAdminController())->setCover();
+});
+$router->get('/admin/portfolio/edit/(\d+)', function ($id) {
+    include_once 'controllers/PortfolioAdminController.php';
+    (new PortfolioAdminController())->edit($id);
+});
+$router->post('/admin/portfolio/edit/(\d+)', function ($id) {
+    include_once 'controllers/PortfolioAdminController.php';
+    (new PortfolioAdminController())->edit($id);
+});
+$router->get('/admin/portfolio/(\d+)/images', function ($id) {
+    include_once 'controllers/PortfolioAdminController.php';
+    (new PortfolioAdminController())->images($id);
+});
+$router->post('/admin/portfolio/(\d+)/images', function ($id) {
+    include_once 'controllers/PortfolioAdminController.php';
+    (new PortfolioAdminController())->uploadImages($id);
+});
+$router->post('/admin/portfolio/(\d+)/embed', function ($id) {
+    include_once 'controllers/PortfolioAdminController.php';
+    (new PortfolioAdminController())->addEmbed($id);
 });
 
 // ==== Routes de test =====

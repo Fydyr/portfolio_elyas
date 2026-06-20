@@ -1,12 +1,12 @@
 :root {
     /* Modern Star Wars Palette - Subtil et élégant */
-    --primary-color: #3B82F6;
+    --primary-color: #B98FFF;
     --secondary-color: #8B5CF6;
     --accent-color: #06B6D4;
     --success-color: #10B981;
     --warning-color: #F59E0B;
     --danger-color: #EF4444;
-    --info-color: #3B82F6;
+    --info-color: #B98FFF;
 
     /* Backgrounds - Modern Dark */
     --dark-bg: #0F172A;
@@ -22,8 +22,8 @@
     --text-accent: #60A5FA;
 
     /* Gradients - Modern & Smooth */
-    --gradient-primary: linear-gradient(135deg, #3B82F6 0%, #8B5CF6 100%);
-    --gradient-secondary: linear-gradient(135deg, #06B6D4 0%, #3B82F6 100%);
+    --gradient-primary: linear-gradient(135deg, #B98FFF 0%, #8B5CF6 100%);
+    --gradient-secondary: linear-gradient(135deg, #06B6D4 0%, #B98FFF 100%);
     --gradient-success: linear-gradient(135deg, #10B981 0%, #06B6D4 100%);
     --gradient-warning: linear-gradient(135deg, #F59E0B 0%, #EF4444 100%);
     --gradient-danger: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
@@ -34,12 +34,12 @@
     --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
     --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-    --shadow-glow: 0 0 20px rgba(59, 130, 246, 0.3);
+    --shadow-glow: 0 0 20px rgba(185, 143, 255, 0.3);
     --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.4);
-    --shadow-hover: 0 15px 50px rgba(59, 130, 246, 0.2);
+    --shadow-hover: 0 15px 50px rgba(185, 143, 255, 0.2);
 
     /* Borders - Clean */
-    --border-primary: 1px solid rgba(59, 130, 246, 0.3);
+    --border-primary: 1px solid rgba(185, 143, 255, 0.3);
     --border-subtle: 1px solid rgba(148, 163, 184, 0.2);
     --border-muted: 1px solid rgba(148, 163, 184, 0.1);
     --border-radius: 12px;
@@ -79,13 +79,16 @@ html {
 }
 
 body {
-    background: var(--dark-bg);
+    background-color: #1a0f33;
     background-image:
-        radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.06) 0%, transparent 50%),
-        radial-gradient(circle at 40% 80%, rgba(6, 182, 212, 0.05) 0%, transparent 50%);
+        linear-gradient(rgba(26, 15, 51, 0.55), rgba(12, 6, 26, 0.72)),
+        url('/assets/img/bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
     color: var(--text-secondary);
-    font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+    font-family: 'Courier Prime', 'Courier New', monospace;
     font-size: 16px;
     line-height: 1.6;
     min-height: 100vh;
@@ -103,11 +106,11 @@ body::before {
     width: 100%;
     height: 100%;
     background-image:
-        radial-gradient(1px 1px at 20% 30%, rgba(59, 130, 246, 0.3), transparent),
+        radial-gradient(1px 1px at 20% 30%, rgba(185, 143, 255, 0.3), transparent),
         radial-gradient(1px 1px at 60% 70%, rgba(139, 92, 246, 0.3), transparent),
         radial-gradient(1px 1px at 50% 50%, rgba(248, 250, 252, 0.2), transparent),
-        radial-gradient(1px 1px at 80% 10%, rgba(6, 182, 212, 0.3), transparent),
-        radial-gradient(1px 1px at 90% 60%, rgba(59, 130, 246, 0.2), transparent);
+        radial-gradient(1px 1px at 80% 10%, rgba(212, 179, 255, 0.3), transparent),
+        radial-gradient(1px 1px at 90% 60%, rgba(185, 143, 255, 0.2), transparent);
     background-size: 550px 550px, 350px 350px, 250px 250px, 450px 450px, 350px 350px;
     background-position: 0 0, 40px 60px, 130px 270px, 70px 100px, 250px 50px;
     pointer-events: none;
@@ -231,7 +234,7 @@ a:hover {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Courier Prime', 'Courier New', monospace;
 }
 
 .brand-name {
@@ -267,15 +270,15 @@ a:hover {
 
 .navbar-nav .nav-link:hover {
     color: var(--primary-color);
-    background: rgba(0, 212, 255, 0.1);
+    background: rgba(185, 143, 255, 0.1);
     text-decoration: none;
     transform: translateY(-1px);
 }
 
 .navbar-nav .nav-link.active {
     color: var(--primary-color);
-    background: rgba(0, 212, 255, 0.2);
-    box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
+    background: rgba(185, 143, 255, 0.2);
+    box-shadow: 0 0 20px rgba(185, 143, 255, 0.2);
 }
 
 .nav-icon {
@@ -361,7 +364,7 @@ a:hover {
 }
 
 .alert-info::before {
-    background: linear-gradient(135deg, #00b4d8 0%, #00d4ff 100%);
+    background: linear-gradient(135deg, #00b4d8 0%, #B98FFF 100%);
 }
 
 /* ===== BOUTONS ===== */
@@ -386,13 +389,13 @@ a:hover {
 
 .btn:focus {
     outline: none;
-    box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.3);
+    box-shadow: 0 0 0 3px rgba(185, 143, 255, 0.3);
 }
 
 .btn-primary {
     background: var(--gradient-primary);
     color: white;
-    box-shadow: 0 4px 15px rgba(0, 212, 255, 0.4);
+    box-shadow: 0 4px 15px rgba(185, 143, 255, 0.4);
 }
 
 .btn-primary:hover {
@@ -405,12 +408,12 @@ a:hover {
 .btn-secondary {
     background: var(--gradient-secondary);
     color: white;
-    box-shadow: 0 4px 15px rgba(255, 0, 110, 0.4);
+    box-shadow: 0 4px 15px rgba(141, 99, 184, 0.4);
 }
 
 .btn-secondary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 0 30px rgba(255, 0, 110, 0.5);
+    box-shadow: 0 0 30px rgba(141, 99, 184, 0.5);
     color: white;
 }
 
@@ -448,7 +451,7 @@ a:hover {
 .btn-outline-secondary:hover {
     background: var(--secondary-color);
     color: white;
-    box-shadow: 0 0 30px rgba(255, 0, 110, 0.5);
+    box-shadow: 0 0 30px rgba(141, 99, 184, 0.5);
     transform: translateY(-2px);
 }
 
@@ -489,7 +492,7 @@ a:hover {
 .card:hover {
     transform: translateY(-8px);
     box-shadow: var(--shadow-hover);
-    border-color: rgba(59, 130, 246, 0.5);
+    border-color: rgba(185, 143, 255, 0.5);
     background: var(--glass-hover);
 }
 
@@ -560,7 +563,7 @@ a:hover {
 }
 
 .table tbody tr:hover {
-    background: rgba(0, 212, 255, 0.1);
+    background: rgba(185, 143, 255, 0.1);
     transform: scale(1.002);
 }
 
@@ -665,9 +668,9 @@ a:hover {
 }
 
 .timeline-content:hover {
-    background: rgba(0, 212, 255, 0.1);
+    background: rgba(185, 143, 255, 0.1);
     transform: translateX(10px);
-    box-shadow: 0 10px 30px rgba(0, 212, 255, 0.2);
+    box-shadow: 0 10px 30px rgba(185, 143, 255, 0.2);
 }
 
 .timeline-period {
@@ -681,7 +684,7 @@ a:hover {
     letter-spacing: 0.5px;
     display: inline-block;
     margin-bottom: var(--spacing-sm);
-    box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
+    box-shadow: 0 4px 15px rgba(185, 143, 255, 0.3);
 }
 
 .timeline-title {
@@ -712,18 +715,18 @@ a:hover {
 }
 
 .detail-badge {
-    background: rgba(0, 212, 255, 0.2);
+    background: rgba(185, 143, 255, 0.2);
     color: var(--primary-color);
     padding: 0.25rem 0.75rem;
     border-radius: 50px;
     font-size: 0.75rem;
     font-weight: 500;
-    border: 1px solid rgba(0, 212, 255, 0.3);
+    border: 1px solid rgba(185, 143, 255, 0.3);
     transition: var(--transition);
 }
 
 .detail-badge:hover {
-    background: rgba(0, 212, 255, 0.3);
+    background: rgba(185, 143, 255, 0.3);
     transform: translateY(-1px);
 }
 
@@ -743,7 +746,7 @@ a:hover {
 }
 
 .status-badge.completed {
-    background: linear-gradient(135deg, #00ff88 0%, #00d4ff 100%);
+    background: linear-gradient(135deg, #00ff88 0%, #B98FFF 100%);
     animation: none;
 }
 
@@ -761,15 +764,15 @@ a:hover {
 
 @keyframes pulse {
     0% {
-        box-shadow: 0 0 0 0 rgba(0, 212, 255, 0.7);
+        box-shadow: 0 0 0 0 rgba(185, 143, 255, 0.7);
     }
 
     70% {
-        box-shadow: 0 0 0 10px rgba(0, 212, 255, 0);
+        box-shadow: 0 0 0 10px rgba(185, 143, 255, 0);
     }
 
     100% {
-        box-shadow: 0 0 0 0 rgba(0, 212, 255, 0);
+        box-shadow: 0 0 0 0 rgba(185, 143, 255, 0);
     }
 }
 
@@ -822,6 +825,18 @@ a:hover {
     display: block;
 }
 
+/* Texte d'aide des formulaires (Bootstrap .form-text) — lisible sur fond sombre */
+.form-text,
+.form-text.text-muted,
+small.form-text {
+    color: rgba(255, 255, 255, 0.78) !important;
+}
+
+/* Placeholders des champs — un peu plus clairs aussi */
+.form-control::placeholder {
+    color: rgba(255, 255, 255, 0.45) !important;
+}
+
 .form-control {
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.2);
@@ -837,7 +852,7 @@ a:hover {
 .form-control:focus {
     background: rgba(255, 255, 255, 0.1);
     border-color: var(--primary-color);
-    box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+    box-shadow: 0 0 20px rgba(185, 143, 255, 0.3);
     color: var(--text-primary);
     outline: none;
 }
@@ -867,7 +882,7 @@ a:hover {
 .form-select:focus {
     background: rgba(255, 255, 255, 0.1);
     border-color: var(--primary-color);
-    box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+    box-shadow: 0 0 20px rgba(185, 143, 255, 0.3);
     color: var(--text-primary);
     outline: none;
 }
@@ -888,7 +903,7 @@ a:hover {
 }
 
 .form-check-input:focus {
-    box-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
+    box-shadow: 0 0 10px rgba(185, 143, 255, 0.3);
 }
 
 .form-check-label {
@@ -1095,7 +1110,7 @@ a:hover {
 }
 
 .passion-item:hover {
-    background: rgba(0, 212, 255, 0.1);
+    background: rgba(185, 143, 255, 0.1);
     transform: translateX(5px);
 }
 
@@ -1111,7 +1126,7 @@ a:hover {
 }
 
 .language-item:hover {
-    background: rgba(0, 212, 255, 0.1);
+    background: rgba(185, 143, 255, 0.1);
     border-color: var(--primary-color);
 }
 
@@ -1217,11 +1232,11 @@ a:hover {
 
 @keyframes glow {
     from {
-        filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.5));
+        filter: drop-shadow(0 0 10px rgba(185, 143, 255, 0.5));
     }
 
     to {
-        filter: drop-shadow(0 0 20px rgba(59, 130, 246, 0.8));
+        filter: drop-shadow(0 0 20px rgba(185, 143, 255, 0.8));
     }
 }
 
@@ -1247,15 +1262,15 @@ a:hover {
 
 @keyframes pulse-border {
     0% {
-        border-color: rgba(0, 212, 255, 0.3);
+        border-color: rgba(185, 143, 255, 0.3);
     }
 
     50% {
-        border-color: rgba(0, 212, 255, 0.8);
+        border-color: rgba(185, 143, 255, 0.8);
     }
 
     100% {
-        border-color: rgba(0, 212, 255, 0.3);
+        border-color: rgba(185, 143, 255, 0.3);
     }
 }
 
@@ -1449,9 +1464,9 @@ a:hover {
 [data-theme="light"] body {
     background: var(--dark-bg);
     background-image:
-        radial-gradient(circle at 20% 50%, rgba(120, 9, 183, 0.05) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, rgba(255, 0, 110, 0.05) 0%, transparent 50%),
-        radial-gradient(circle at 40% 80%, rgba(0, 212, 255, 0.05) 0%, transparent 50%);
+        radial-gradient(circle at 20% 50%, rgba(117, 0, 158, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(141, 99, 184, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 40% 80%, rgba(185, 143, 255, 0.05) 0%, transparent 50%);
 }
 
 [data-theme="light"] .form-control {
@@ -1499,7 +1514,7 @@ a:hover {
 
 .tech-modal-content {
     background: var(--dark-card);
-    border: 1px solid rgba(59, 130, 246, 0.3);
+    border: 1px solid rgba(185, 143, 255, 0.3);
     border-radius: 20px;
     max-width: 650px;
     width: 100%;
@@ -1510,7 +1525,7 @@ a:hover {
     box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5);
     animation: modalSlideIn 0.3s ease-out;
     scrollbar-width: thin;
-    scrollbar-color: rgba(59, 130, 246, 0.5) rgba(30, 41, 59, 0.3);
+    scrollbar-color: rgba(185, 143, 255, 0.5) rgba(30, 41, 59, 0.3);
 }
 
 .tech-modal-content::-webkit-scrollbar {
@@ -1523,12 +1538,12 @@ a:hover {
 }
 
 .tech-modal-content::-webkit-scrollbar-thumb {
-    background: rgba(59, 130, 246, 0.5);
+    background: rgba(185, 143, 255, 0.5);
     border-radius: 10px;
 }
 
 .tech-modal-content::-webkit-scrollbar-thumb:hover {
-    background: rgba(59, 130, 246, 0.7);
+    background: rgba(185, 143, 255, 0.7);
 }
 
 @keyframes modalSlideIn {
@@ -1584,7 +1599,7 @@ a:hover {
     align-items: center;
     justify-content: center;
     margin: 0 auto 1.5rem;
-    box-shadow: 0 10px 40px rgba(59, 130, 246, 0.4);
+    box-shadow: 0 10px 40px rgba(185, 143, 255, 0.4);
 }
 
 .tech-icon-display {
@@ -1636,7 +1651,7 @@ a:hover {
 }
 
 .tech-info-item:hover {
-    border-color: rgba(59, 130, 246, 0.4);
+    border-color: rgba(185, 143, 255, 0.4);
     background: rgba(30, 41, 59, 0.7);
 }
 
@@ -1728,12 +1743,12 @@ a:hover {
 .btn-modal-docs {
     background: var(--gradient-primary);
     color: white;
-    box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
+    box-shadow: 0 4px 20px rgba(185, 143, 255, 0.3);
 }
 
 .btn-modal-docs:hover {
     transform: translateY(-3px);
-    box-shadow: 0 8px 30px rgba(59, 130, 246, 0.5);
+    box-shadow: 0 8px 30px rgba(185, 143, 255, 0.5);
     color: white;
 }
 
@@ -1874,8 +1889,8 @@ a:hover {
 .hero-badge {
     display: inline-block;
     padding: 0.5rem 1.25rem;
-    background: rgba(59, 130, 246, 0.1);
-    border: 1px solid rgba(59, 130, 246, 0.3);
+    background: rgba(185, 143, 255, 0.1);
+    border: 1px solid rgba(185, 143, 255, 0.3);
     border-radius: 50px;
     color: var(--primary-color);
     font-size: 0.875rem;
@@ -1926,12 +1941,12 @@ a:hover {
     background: var(--gradient-primary);
     color: white;
     border: none;
-    box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
+    box-shadow: 0 4px 20px rgba(185, 143, 255, 0.3);
 }
 
 .btn-hero-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 30px rgba(59, 130, 246, 0.4);
+    box-shadow: 0 8px 30px rgba(185, 143, 255, 0.4);
     color: white;
 }
 
@@ -1967,7 +1982,7 @@ a:hover {
 
 .stat-card:hover {
     transform: translateY(-5px);
-    border-color: rgba(59, 130, 246, 0.4);
+    border-color: rgba(185, 143, 255, 0.4);
     background: rgba(30, 41, 59, 0.6);
 }
 
@@ -2006,8 +2021,8 @@ a:hover {
 
 .skill-card:hover {
     transform: translateY(-5px);
-    border-color: rgba(59, 130, 246, 0.4);
-    box-shadow: 0 10px 40px rgba(59, 130, 246, 0.2);
+    border-color: rgba(185, 143, 255, 0.4);
+    box-shadow: 0 10px 40px rgba(185, 143, 255, 0.2);
 }
 
 .skill-icon {
@@ -2039,8 +2054,8 @@ a:hover {
 
 .skill-tag {
     padding: 0.375rem 0.875rem;
-    background: rgba(59, 130, 246, 0.1);
-    border: 1px solid rgba(59, 130, 246, 0.3);
+    background: rgba(185, 143, 255, 0.1);
+    border: 1px solid rgba(185, 143, 255, 0.3);
     border-radius: 8px;
     font-size: 0.813rem;
     color: var(--primary-color);
@@ -2049,7 +2064,7 @@ a:hover {
 }
 
 .skill-tag:hover {
-    background: rgba(59, 130, 246, 0.2);
+    background: rgba(185, 143, 255, 0.2);
     transform: translateY(-2px);
 }
 
@@ -2058,7 +2073,7 @@ a:hover {
 }
 
 .tech-badge:hover {
-    box-shadow: 0 5px 20px rgba(59, 130, 246, 0.4);
+    box-shadow: 0 5px 20px rgba(185, 143, 255, 0.4);
 }
 
 /* Section Headers */
@@ -2125,7 +2140,7 @@ a:hover {
     height: 12px;
     background: var(--gradient-primary);
     border-radius: 50%;
-    box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+    box-shadow: 0 0 20px rgba(185, 143, 255, 0.5);
 }
 
 .timeline-item-modern::after {
@@ -2135,7 +2150,7 @@ a:hover {
     top: 12px;
     bottom: -3rem;
     width: 2px;
-    background: linear-gradient(180deg, rgba(59, 130, 246, 0.5), transparent);
+    background: linear-gradient(180deg, rgba(185, 143, 255, 0.5), transparent);
 }
 
 .timeline-item-modern:last-child::after {
@@ -2152,15 +2167,15 @@ a:hover {
 
 .timeline-content-modern:hover {
     transform: translateX(10px);
-    border-color: rgba(59, 130, 246, 0.4);
-    box-shadow: 0 10px 40px rgba(59, 130, 246, 0.15);
+    border-color: rgba(185, 143, 255, 0.4);
+    box-shadow: 0 10px 40px rgba(185, 143, 255, 0.15);
 }
 
 .timeline-date {
     display: inline-block;
     padding: 0.375rem 0.875rem;
-    background: rgba(59, 130, 246, 0.1);
-    border: 1px solid rgba(59, 130, 246, 0.3);
+    background: rgba(185, 143, 255, 0.1);
+    border: 1px solid rgba(185, 143, 255, 0.3);
     border-radius: 8px;
     color: var(--primary-color);
     font-size: 0.875rem;
@@ -2213,7 +2228,7 @@ a:hover {
     border-color: transparent;
     color: white;
     transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
+    box-shadow: 0 10px 30px rgba(185, 143, 255, 0.3);
 }
 
 /* Passion Cards */
@@ -2367,8 +2382,8 @@ a:hover {
 .project-category {
     display: inline-block;
     padding: 0.5rem 1.25rem;
-    background: rgba(59, 130, 246, 0.1);
-    border: 1px solid rgba(59, 130, 246, 0.3);
+    background: rgba(185, 143, 255, 0.1);
+    border: 1px solid rgba(185, 143, 255, 0.3);
     border-radius: 50px;
     color: var(--primary-color);
     font-size: 0.875rem;
@@ -2406,7 +2421,7 @@ a:hover {
 
 .project-image-main:hover {
     transform: translateY(-10px);
-    box-shadow: 0 30px 80px rgba(59, 130, 246, 0.3);
+    box-shadow: 0 30px 80px rgba(185, 143, 255, 0.3);
 }
 
 .project-image-main img {
@@ -2435,8 +2450,8 @@ a:hover {
 
 .gallery-item:hover {
     transform: translateY(-5px);
-    box-shadow: 0 15px 40px rgba(59, 130, 246, 0.2);
-    border-color: rgba(59, 130, 246, 0.4);
+    box-shadow: 0 15px 40px rgba(185, 143, 255, 0.2);
+    border-color: rgba(185, 143, 255, 0.4);
 }
 
 .gallery-item img {
@@ -2464,8 +2479,8 @@ a:hover {
 }
 
 .content-section:hover {
-    border-color: rgba(59, 130, 246, 0.4);
-    box-shadow: 0 10px 40px rgba(59, 130, 246, 0.15);
+    border-color: rgba(185, 143, 255, 0.4);
+    box-shadow: 0 10px 40px rgba(185, 143, 255, 0.15);
 }
 
 .section-label {
@@ -2506,8 +2521,8 @@ a:hover {
 
 .tech-tag {
     padding: 0.625rem 1.25rem;
-    background: rgba(59, 130, 246, 0.1);
-    border: 1px solid rgba(59, 130, 246, 0.3);
+    background: rgba(185, 143, 255, 0.1);
+    border: 1px solid rgba(185, 143, 255, 0.3);
     border-radius: 10px;
     color: var(--primary-color);
     font-size: 0.938rem;
@@ -2519,9 +2534,9 @@ a:hover {
 }
 
 .tech-tag:hover {
-    background: rgba(59, 130, 246, 0.2);
+    background: rgba(185, 143, 255, 0.2);
     transform: translateY(-3px);
-    box-shadow: 0 5px 20px rgba(59, 130, 246, 0.3);
+    box-shadow: 0 5px 20px rgba(185, 143, 255, 0.3);
 }
 
 /* Action Buttons */
@@ -2549,12 +2564,12 @@ a:hover {
     background: var(--gradient-primary);
     color: white;
     border: none;
-    box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
+    box-shadow: 0 4px 20px rgba(185, 143, 255, 0.3);
 }
 
 .btn-action-primary:hover {
     transform: translateY(-3px);
-    box-shadow: 0 8px 30px rgba(59, 130, 246, 0.5);
+    box-shadow: 0 8px 30px rgba(185, 143, 255, 0.5);
     color: white;
 }
 
@@ -2612,7 +2627,7 @@ a:hover {
 }
 
 .lightbox-btn:hover {
-    background: rgba(59, 130, 246, 0.8);
+    background: rgba(185, 143, 255, 0.8);
     border-color: var(--primary-color);
     transform: scale(1.1);
 }
@@ -2642,7 +2657,7 @@ a:hover {
 /* Divider */
 .gradient-divider {
     height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.5), transparent);
+    background: linear-gradient(90deg, transparent, rgba(185, 143, 255, 0.5), transparent);
     margin: 3rem 0;
 }
 

@@ -3,7 +3,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title><?= $price ? 'Modifier' : 'Ajouter' ?> un tarif</title>
+    <title><?= $price ? 'Modifier' : 'Ajouter' ?> une commission</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
@@ -11,7 +11,7 @@
 </head>
 <body>
 <div class="container py-4">
-    <h1><?= $price ? 'Modifier' : 'Ajouter' ?> un tarif</h1>
+    <h1><?= $price ? 'Modifier' : 'Ajouter' ?> une commission</h1>
     <form method="post" class="card">
         <div class="card-body">
             <div class="row g-3">
@@ -36,6 +36,18 @@
                         <input class="form-check-input" type="checkbox" name="visible" value="1" id="visible" <?= !$price || $price['visible'] ? 'checked' : '' ?>>
                         <label class="form-check-label" for="visible">Visible</label>
                     </div>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Catégorie portfolio liée</label>
+                    <select name="portfolio_category_id" class="form-select">
+                        <option value="">— Aucune —</option>
+                        <?php foreach (($categories ?? []) as $cat): ?>
+                            <option value="<?= (int)$cat['id'] ?>" <?= (isset($linkedCategoryId) && (int)$linkedCategoryId === (int)$cat['id']) ? 'selected' : '' ?>>
+                                <?= htmlspecialchars($cat['name']) ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                    <div class="form-text">Ajoute un bouton « Voir des exemples » vers la galerie de cette catégorie.</div>
                 </div>
                 <div class="col-12">
                     <label class="form-label">Description</label>

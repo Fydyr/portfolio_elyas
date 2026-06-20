@@ -1,10 +1,10 @@
 <?php ob_start(); ?>
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>À propos - Enzo Fournier</title>
+    <title>About - Fynt</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
@@ -24,10 +24,10 @@
         .about-avatar {
             width: 220px; height: 220px;
             border-radius: 50%;
-            background: var(--gradient-primary, linear-gradient(135deg,#00d4ff,#7209b7));
+            background: var(--gradient-primary, linear-gradient(135deg,#B98FFF,#75009E));
             display: flex; align-items: center; justify-content: center;
             font-size: 5rem; color: #fff;
-            box-shadow: 0 10px 40px rgba(0,212,255,0.3);
+            box-shadow: 0 10px 40px rgba(185, 143, 255,0.3);
             margin: 0 auto;
         }
         .about-mini-stats {
@@ -41,65 +41,52 @@
             font-size: 0.9rem;
             display: inline-flex; align-items: center; gap: 0.5rem;
         }
-        .about-mini-stats .pill strong { color: var(--primary-color, #00d4ff); }
-
-        .repo-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 1rem;
-        }
-        .repo-card {
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 12px;
-            padding: 1.25rem;
-            transition: all .2s;
-            text-decoration: none;
-            color: inherit;
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-        .repo-card:hover {
-            border-color: var(--primary-color, #00d4ff);
-            transform: translateY(-3px);
-            box-shadow: 0 8px 24px rgba(0,212,255,0.2);
-            color: inherit;
-        }
-        .repo-card h4 {
-            color: var(--primary-color, #00d4ff);
-            margin: 0;
-            font-size: 1.1rem;
-            display: flex; align-items: center; gap: 0.5rem;
-        }
-        .repo-card .repo-desc {
-            color: var(--text-secondary, #a0a0a0);
-            font-size: 0.92rem;
-            min-height: 2.5em;
-        }
-        .repo-meta {
-            display: flex; flex-wrap: wrap; gap: 1rem; align-items: center;
-            font-size: 0.85rem;
-            color: var(--text-secondary, #a0a0a0);
-            margin-top: auto;
-        }
-        .repo-meta .lang-dot {
-            display: inline-block; width: 10px; height: 10px; border-radius: 50%;
-            background: #00d4ff; margin-right: 0.4rem;
-        }
-        .empty-repos {
-            background: rgba(255,255,255,0.04);
-            border: 1px dashed rgba(255,255,255,0.15);
-            border-radius: 12px;
-            padding: 2rem;
-            text-align: center;
-            color: var(--text-secondary, #a0a0a0);
-        }
+        .about-mini-stats .pill strong { color: var(--primary-color, #B98FFF); }
 
         .section-title-about {
-            color: var(--primary-color, #00d4ff);
+            color: var(--primary-color, #B98FFF);
             margin: 3rem 0 1.5rem;
             display: flex; align-items: center; gap: 0.75rem;
+        }
+
+        /* Find me online — uniform social tiles */
+        .social-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 0.9rem;
+        }
+        .social-tile {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.55rem;
+            padding: 1.15rem 0.5rem;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-secondary, #a0a0a0);
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+        .social-tile i {
+            font-size: 1.7rem;
+            transition: transform 0.2s ease, color 0.2s ease;
+        }
+        .social-tile span {
+            font-size: 0.9rem;
+            letter-spacing: 0.3px;
+        }
+        .social-tile:hover {
+            color: #fff;
+            border-color: var(--primary-color, #B98FFF);
+            background: rgba(185, 143, 255, 0.1);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(185, 143, 255, 0.25);
+        }
+        .social-tile:hover i {
+            transform: scale(1.15);
+            color: var(--primary-color, #B98FFF);
         }
     </style>
 </head>
@@ -108,40 +95,35 @@
 
     <!-- ===== Hero ===== -->
     <div class="about-hero fade-in">
-        <div class="about-avatar"><i class="fas fa-user-astronaut"></i></div>
+        <div class="about-avatar"><i class="fas fa-palette"></i></div>
         <div>
-            <h1 style="margin: 0;">Enzo Fournier</h1>
+            <h1 style="margin: 0;">Fynt</h1>
             <p class="lead mt-3" style="color: var(--text-secondary, #a0a0a0);">
                 <?= $heroSubtitle ?>
             </p>
             <div class="about-mini-stats">
-                <span class="pill"><i class="bi bi-folder-fill"></i> <strong><?= (int)$projectsCount ?></strong> projets visibles</span>
-                <span class="pill"><i class="bi bi-stars"></i> <strong><?= (int)$skillsCount ?></strong> compétences</span>
-                <span class="pill"><i class="bi bi-heart-fill"></i> <strong><?= (int)$passionsCount ?></strong> passions</span>
+                <span class="pill"><i class="bi bi-images"></i> <strong><?= (int)$projectsCount ?></strong> portfolio works</span>
+                <span class="pill"><i class="bi bi-stars"></i> <strong><?= (int)$skillsCount ?></strong> services</span>
+                <span class="pill"><i class="bi bi-patch-check-fill"></i> Commissions open</span>
             </div>
 
             <div class="mt-4 d-flex flex-wrap gap-2">
-                <?php if ($hasCv): ?>
-                    <a href="/assets/docs/mon_cv.pdf" target="_blank" class="btn btn-primary">
-                        <i class="fas fa-file-download"></i> Mon CV
-                    </a>
-                <?php endif; ?>
+                <a href="https://vgen.co/fyfyntt" target="_blank" rel="noopener" class="btn btn-primary">
+                    <i class="fas fa-pen-nib"></i> Commission me
+                </a>
                 <a href="<?= url('projects') ?>" class="btn btn-outline-light">
-                    <i class="fas fa-folder-open"></i> Mes projets
+                    <i class="fas fa-palette"></i> Portfolio
                 </a>
                 <a href="<?= url('contact') ?>" class="btn btn-outline-light">
-                    <i class="fas fa-envelope"></i> Me contacter
-                </a>
-                <a href="https://github.com/<?= rawurlencode($githubUser) ?>" target="_blank" rel="noopener" class="btn btn-outline-light">
-                    <i class="fab fa-github"></i> GitHub
+                    <i class="fas fa-comment-dots"></i> Contact
                 </a>
             </div>
         </div>
     </div>
 
-    <!-- ===== Bio détaillée ===== -->
+    <!-- ===== Bio ===== -->
     <?php if (!empty($bioHtml)): ?>
-        <h2 class="section-title-about"><i class="bi bi-person-vcard"></i> Qui suis-je ?</h2>
+        <h2 class="section-title-about"><i class="bi bi-person-vcard"></i> Who am I?</h2>
         <div class="card">
             <div class="card-body">
                 <?= $bioHtml ?>
@@ -149,9 +131,9 @@
         </div>
     <?php endif; ?>
 
-    <!-- ===== Sections personnalisées (Ce que je cherche, etc.) ===== -->
+    <!-- ===== Sections personnalisées (What I create, etc.) ===== -->
     <?php if (!empty($sections)): ?>
-        <h2 class="section-title-about"><i class="bi bi-briefcase-fill"></i> Ce que je cherche</h2>
+        <h2 class="section-title-about"><i class="bi bi-easel-fill"></i> What I create</h2>
         <div class="row g-3">
             <?php foreach ($sections as $sec): ?>
                 <div class="col-md-4">
@@ -175,71 +157,26 @@
         </div>
     <?php endif; ?>
 
-    <?php
-    /**
-     * Fonction de rendu d'une grille de repos GitHub (évite la duplication
-     * entre le bloc "projet principal" et "activité GitHub").
-     */
-    $renderReposGrid = function(array $repos, string $fallbackLogin) {
-        if (empty($repos)) { ?>
-            <div class="empty-repos">
-                <i class="bi bi-cloud-slash" style="font-size: 2rem;"></i>
-                <p class="mt-2 mb-0">Impossible de récupérer les repos GitHub pour le moment.<br>
-                <a href="https://github.com/<?= htmlspecialchars($fallbackLogin) ?>" target="_blank" rel="noopener">Voir directement sur GitHub.</a></p>
+    <!-- ===== Find me online ===== -->
+    <h2 class="section-title-about"><i class="bi bi-globe2"></i> Find me online</h2>
+    <div class="card">
+        <div class="card-body">
+            <div class="social-grid">
+                <a href="https://twitter.com/_FoxBee" target="_blank" rel="noopener" class="social-tile"><i class="fab fa-twitter"></i><span>Twitter</span></a>
+                <a href="https://www.instagram.com/fyfyntt/" target="_blank" rel="noopener" class="social-tile"><i class="fab fa-instagram"></i><span>Instagram</span></a>
+                <a href="https://www.youtube.com/@Fynt_Elyas" target="_blank" rel="noopener" class="social-tile"><i class="fab fa-youtube"></i><span>YouTube</span></a>
+                <a href="https://www.twitch.tv/fyfyntt" target="_blank" rel="noopener" class="social-tile"><i class="fab fa-twitch"></i><span>Twitch</span></a>
+                <a href="https://www.tiktok.com/@fyfyntt" target="_blank" rel="noopener" class="social-tile"><i class="fab fa-tiktok"></i><span>TikTok</span></a>
+                <a href="https://www.artstation.com/fyntsu/profile" target="_blank" rel="noopener" class="social-tile"><i class="fab fa-artstation"></i><span>ArtStation</span></a>
+                <a href="https://www.deviantart.com/fyntb" target="_blank" rel="noopener" class="social-tile"><i class="fab fa-deviantart"></i><span>DeviantArt</span></a>
+                <a href="https://cara.app/fyfyntt" target="_blank" rel="noopener" class="social-tile"><i class="fas fa-paintbrush"></i><span>Cara</span></a>
+                <a href="https://ko-fi.com/fyntsu" target="_blank" rel="noopener" class="social-tile"><i class="fas fa-mug-hot"></i><span>Ko-fi</span></a>
+                <a href="https://www.patreon.com/fyfynt" target="_blank" rel="noopener" class="social-tile"><i class="fab fa-patreon"></i><span>Patreon</span></a>
+                <a href="https://vgen.co/fyfyntt" target="_blank" rel="noopener" class="social-tile"><i class="fas fa-pen-nib"></i><span>VGen</span></a>
+                <a href="https://discord.gg/DTvkz3BQHz" target="_blank" rel="noopener" class="social-tile"><i class="fab fa-discord"></i><span>Discord</span></a>
             </div>
-        <?php return; }
-        ?>
-        <div class="repo-grid">
-            <?php foreach ($repos as $r): ?>
-                <a href="<?= htmlspecialchars($r['html_url']) ?>" target="_blank" rel="noopener" class="repo-card">
-                    <h4>
-                        <i class="bi bi-journal-code"></i>
-                        <?= htmlspecialchars($r['name']) ?>
-                    </h4>
-                    <p class="repo-desc">
-                        <?= htmlspecialchars($r['description'] ?: 'Pas de description.') ?>
-                    </p>
-                    <div class="repo-meta">
-                        <?php if (!empty($r['language'])): ?>
-                            <span><span class="lang-dot"></span><?= htmlspecialchars($r['language']) ?></span>
-                        <?php endif; ?>
-                        <span><i class="bi bi-star-fill"></i> <?= (int)$r['stars'] ?></span>
-                        <span><i class="bi bi-diagram-2"></i> <?= (int)$r['forks'] ?></span>
-                        <?php if (!empty($r['pushed_at'])): ?>
-                            <span title="<?= htmlspecialchars($r['pushed_at']) ?>">
-                                <i class="bi bi-clock-history"></i>
-                                <?= date('d/m/Y', strtotime($r['pushed_at'])) ?>
-                            </span>
-                        <?php endif; ?>
-                    </div>
-                </a>
-            <?php endforeach; ?>
         </div>
-    <?php };
-    ?>
-
-    <!-- ===== Bloc GitHub org / projet principal (Aeroliths) ===== -->
-    <?php if (!empty($githubOrg)): ?>
-        <h2 class="section-title-about">
-            <i class="bi bi-stars"></i>
-            <?= !empty($githubOrgLabel) ? htmlspecialchars($githubOrgLabel) : 'Projet principal' ?>
-            <a href="https://github.com/<?= rawurlencode($githubOrg) ?>" target="_blank" rel="noopener"
-               style="font-size: 0.85rem; margin-left: auto; color: var(--text-secondary, #a0a0a0);">
-                Voir <code><?= htmlspecialchars($githubOrg) ?></code> <i class="bi bi-arrow-up-right"></i>
-            </a>
-        </h2>
-        <?php $renderReposGrid($orgRepos, $githubOrg); ?>
-    <?php endif; ?>
-
-    <!-- ===== Derniers repos GitHub personnel ===== -->
-    <h2 class="section-title-about">
-        <i class="bi bi-github"></i> Activité GitHub récente
-        <a href="https://github.com/<?= rawurlencode($githubUser) ?>" target="_blank" rel="noopener"
-           style="font-size: 0.85rem; margin-left: auto; color: var(--text-secondary, #a0a0a0);">
-            Voir le profil <i class="bi bi-arrow-up-right"></i>
-        </a>
-    </h2>
-    <?php $renderReposGrid($repos, $githubUser); ?>
+    </div>
 
 </div>
 </body>
