@@ -1,0 +1,24 @@
+.git
+.gitignore
+.gitattributes
+.env
+.env.local
+.idea
+.vscode
+.tmp.driveupload
+
+# Note: includes/db.php est maintenant env-aware et peut être copié dans l'image sans risque
+# (pas de secrets en dur dedans).
+
+# Vendor est réinstallé via composer install dans le Dockerfile
+vendor
+
+# Volumes / artefacts locaux
+postgres-data
+node_modules
+*.log
+
+# Fichiers de compose : pas utiles dans l'image
+docker-compose.yml
+docker-compose.*.yml
+dev/docker-compose.yml

@@ -1,0 +1,625 @@
+<?php
+
+require_once 'BaseController.php';
+
+class AdminController extends BaseController
+{
+    // ===== Page administration =====
+    public function admin()
+    {
+        if (!isset($_SESSION['user_id']) && !isset($_SESSION['admin']) == 1) {
+            header('HTTP/1.1 403 Forbidden');
+            echo view('403', ['title' => '403 - Accès interdit']);
+            exit;
+        }
+
+        include_once 'includes/db.php';
+        global $pdo;
+
+        // === Stats du dashboard ===
+        $stats = [
+            'projects_total'   => 0,
+            'projects_visible' => 0,
+            'projects_hidden'  => 0,
+            'skills_total'     => 0,
+            'skill_cats_total' => 0,
+            'passions_total'   => 0,
+            'prices_total'     => 0,
+            'users_total'      => 0,
+            'visitors'         => 0,
+            'last_migration'   => null,
+            'cv_size'          => null,
+            'cv_modified'      => null,
+        ];
+
+        try { $stats['projects_total']   = (int)$pdo->query("SELECT COUNT(*) FROM projects")->fetchColumn(); } catch (Exception $e) {}
+        try { $stats['projects_visible'] = (int)$pdo->query("SELECT COUNT(*) FROM projects WHERE visibilite = 1")->fetchColumn(); } catch (Exception $e) {}
+        $stats['projects_hidden'] = $stats['projects_total'] - $stats['projects_visible'];
+
+        try { $stats['skills_total']     = (int)$pdo->query("SELECT COUNT(*) FROM skills")->fetchColumn(); } catch (Exception $e) {}
+        try { $stats['skill_cats_total'] = (int)$pdo->query("SELECT COUNT(*) FROM skill_categories")->fetchColumn(); } catch (Exception $e) {}
+        try { $stats['passions_total']   = (int)$pdo->query("SELECT COUNT(*) FROM passions")->fetchColumn(); } catch (Exception $e) {}
+        try { $stats['prices_total']     = (int)$pdo->query("SELECT COUNT(*) FROM price_items")->fetchColumn(); } catch (Exception $e) {}
+        try { $stats['users_total']      = (int)$pdo->query("SELECT COUNT(*) FROM user")->fetchColumn(); } catch (Exception $e) {}
+
+        try {
+            $row = $pdo->query("SELECT filename, applied_at FROM schema_migrations ORDER BY applied_at DESC LIMIT 1")->fetch(PDO::FETCH_ASSOC);
+            if ($row) $stats['last_migration'] = $row;
+        } catch (Exception $e) {}
+
+        // Compteur de visites (fichier texte existant)
+        $counter = __DIR__ . '/../assets/docs/compteur.txt';
+        if (is_file($counter)) {
+            $stats['visitors'] = (int)file_get_contents($counter);
+        }
+
+        // CV
+        $cvPath = __DIR__ . '/../assets/docs/mon_cv.pdf';
+        if (is_file($cvPath)) {
+            $stats['cv_size']     = filesize($cvPath);
+            $stats['cv_modified'] = filemtime($cvPath);
+        }
+
+        // Derniers projets ajoutés
+        $latestProjects = [];
+        try {
+            $stmt = $pdo->query("SELECT id, title, visibilite FROM projects ORDER BY id DESC LIMIT 5");
+            $latestProjects = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {}
+
+        // Historique des visites sur 30 jours (jours sans visite = 0)
+        $visitsByDay = [];
+        $visits7d    = 0;
+        $visits30d   = 0;
+        try {
+            $rows = $pdo->query(
+                "SELECT day, count FROM daily_visits
+                 WHERE day >= (CURDATE() - INTERVAL 29 DAY)
+                 ORDER BY day ASC"
+            )->fetchAll(PDO::FETCH_ASSOC);
+            $byDay = [];
+            foreach ($rows as $r) {
+                $byDay[$r['day']] = (int)$r['count'];
+            }
+            // Complète les jours manquants avec 0
+            for ($i = 29; $i >= 0; $i--) {
+                $day = date('Y-m-d', strtotime("-$i days"));
+                $c   = $byDay[$day] ?? 0;
+                $visitsByDay[$day] = $c;
+                $visits30d += $c;
+                if ($i < 7) $visits7d += $c;
+            }
+        } catch (Exception $e) {}
+
+        echo $this->view('admin', compact('stats', 'latestProjects', 'visitsByDay', 'visits7d', 'visits30d'));
+    }
+
+    // ===== Page d'ajout de projet =====
+    public function addProject()
+    {
+        if (!isset($_SESSION['user_id']) && !isset($_SESSION['admin']) == 1) {
+            header('HTTP/1.1 403 Forbidden');
+            echo view('403', ['title' => '403 - Accès interdit']);
+            exit;
+        }
+
+        // Si c'est une requête POST, traiter le formulaire
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $this->processAddProject();
+        } else {
+            // Sinon, afficher le formulaire
+            echo $this->view('add_project');
+        }
+    }
+
+    private function processAddProject()
+    {
+        try {
+            // Validation des données
+            $errors = $this->validateProjectData();
+
+            if (!empty($errors)) {
+                $_SESSION['errors'] = $errors;
+                $_SESSION['form_data'] = $_POST;
+                header('Location: ' . url('admin/add-project'));
+                exit;
+            }
+
+            // Traitement des images
+            $imageFiles = $this->processImages();
+
+            // Préparation des données pour la base
+            $projectData = [
+                'title' => trim($_POST['projectName']),
+                'description' => trim($_POST['projectDescription']),
+                'is_markdown' => isset($_POST['is_markdown']) ? 1 : 0,
+                'link' => trim($_POST['projectLink']) ?: null,
+                'img1' => $imageFiles[0] ?? null,
+                'img2' => $imageFiles[1] ?? null,
+                'img3' => $imageFiles[2] ?? null,
+                'visibilite' => (($_POST['projectStatus'] ?? '') === 'visible') ? 1 : 0,
+                'languages' => trim($_POST['projectLanguage']),
+            ];
+
+            // Insertion en base de données
+            $this->insertProject($projectData);
+
+            // Message de succès
+            $_SESSION['success'] = 'Le projet a été ajouté avec succès !';
+            header('Location: ' . url('admin'));
+            exit;
+        } catch (Exception $e) {
+            $_SESSION['error'] = 'Erreur lors de l\'ajout du projet : ' . $e->getMessage();
+            $_SESSION['form_data'] = $_POST;
+            header('Location: ' . url('admin/add-project'));
+            exit;
+        }
+    }
+
+    private function validateProjectData()
+    {
+        $errors = [];
+
+        // Validation du nom du projet
+        if (empty($_POST['projectName']) || strlen(trim($_POST['projectName'])) < 2) {
+            $errors[] = 'Le nom du projet doit contenir au moins 2 caractères.';
+        }
+
+        // Validation de la description
+        if (empty($_POST['projectDescription']) || strlen(trim($_POST['projectDescription'])) < 10) {
+            $errors[] = 'La description doit contenir au moins 10 caractères.';
+        }
+
+        // Validation du lien
+        if (!empty($_POST['projectLink']) && !filter_var($_POST['projectLink'], FILTER_VALIDATE_URL)) {
+            $errors[] = 'Veuillez saisir un lien valide.';
+        }
+
+        // Validation des langages
+        if (empty($_POST['projectLanguage'])) {
+            $errors[] = 'Veuillez saisir les langages utilisés.';
+        }
+
+        return $errors;
+    }
+
+    private function processImages()
+    {
+
+        $uploadDir = __DIR__ . '/../assets/img/projects/';
+
+        // Vérifie si le dossier est accessible en écriture
+        if (!is_writable($uploadDir)) {
+            // Tente de changer les permissions à 0755
+            if (!chmod($uploadDir, 0755)) {
+                // Si échec, tente 0777
+                if (!chmod($uploadDir, 0777)) {
+                    die("Erreur : Le dossier '$uploadDir' n'est pas accessible en écriture et les permissions n'ont pas pu être modifiées.");
+                }
+            }
+        }
+
+
+        $uploadedFiles = [];
+        $uploadDir = $_SERVER['DOCUMENT_ROOT'] . '/assets/img/projects/';
+
+        // Créer le dossier s'il n'existe pas
+        if (!is_dir($uploadDir)) {
+            mkdir($uploadDir, 0755, true);
+        }
+
+        // Traitement des 3 images possibles
+        for ($i = 0; $i < 3; $i++) {
+            if (isset($_FILES['projectImage']['name'][$i]) && !empty($_FILES['projectImage']['name'][$i])) {
+                $file = [
+                    'name' => $_FILES['projectImage']['name'][$i],
+                    'tmp_name' => $_FILES['projectImage']['tmp_name'][$i],
+                    'error' => $_FILES['projectImage']['error'][$i],
+                    'size' => $_FILES['projectImage']['size'][$i]
+                ];
+
+                $uploadedFile = $this->uploadImage($file, $uploadDir);
+                if ($uploadedFile) {
+                    $uploadedFiles[] = $uploadedFile;
+                }
+            }
+        }
+
+        return $uploadedFiles;
+    }
+
+    private function uploadImage($file, $uploadDir)
+    {
+        // Vérification des erreurs
+        if ($file['error'] !== UPLOAD_ERR_OK) {
+            throw new Exception('Erreur lors du téléchargement de l\'image.');
+        }
+
+        // Vérification de la taille (max 5MB)
+        if ($file['size'] > 5 * 1024 * 1024) {
+            throw new Exception('L\'image est trop volumineuse (max 5MB).');
+        }
+
+        $allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+        $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+
+        $extension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+        if (!in_array($extension, $allowedExtensions)) {
+            throw new Exception('Type d\'image non autorisé. Utilisez JPG, PNG, GIF ou WebP.');
+        }
+
+        if (function_exists('getimagesize')) {
+            $imageInfo = getimagesize($file['tmp_name']);
+            if ($imageInfo === false) {
+                throw new Exception('Le fichier n\'est pas une image valide.');
+            }
+
+            $mimeType = $imageInfo['mime'];
+            if (!in_array($mimeType, $allowedTypes)) {
+                throw new Exception('Type d\'image non autorisé. Utilisez JPG, PNG, GIF ou WebP.');
+            }
+        }
+
+        // Génération d'un nom unique
+        $fileName = uniqid('project_') . '.' . $extension;
+        $filePath = $uploadDir . $fileName;
+
+        // Déplacement du fichier
+        if (move_uploaded_file($file['tmp_name'], $filePath)) {
+            return $fileName;
+        } else {
+            throw new Exception('Erreur lors de la sauvegarde de l\'image.');
+        }
+    }
+
+    private function insertProject($data)
+    {
+        include_once 'includes/db.php';
+        global $pdo;
+        $stmt = $pdo->prepare("INSERT INTO projects (title, description, is_markdown, link, img1, img2, img3, visibilite, languages)
+                VALUES (:title, :description, :is_markdown, :link, :img1, :img2, :img3, :visibilite, :languages)");
+
+        $result = $stmt->execute([
+            ':title' => $data['title'],
+            ':description' => $data['description'],
+            ':is_markdown' => $data['is_markdown'],
+            ':link' => $data['link'],
+            ':img1' => $data['img1'],
+            ':img2' => $data['img2'],
+            ':img3' => $data['img3'],
+            ':visibilite' => $data['visibilite'],
+            ':languages' => $data['languages'],
+        ]);
+
+        if (!$result) {
+            throw new Exception('Erreur lors de l\'insertion en base de données.');
+        }
+
+        return $pdo->lastInsertId();
+    }
+
+    // ===== Page de liste des projets =====
+    public function listProjects()
+    {
+        if (!isset($_SESSION['user_id']) && !isset($_SESSION['admin']) == 1) {
+            header('HTTP/1.1 403 Forbidden');
+            echo view('403', ['title' => '403 - Accès interdit']);
+            exit;
+        }
+
+        // Si c'est une requête POST, traiter les actions
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (isset($_POST['projectId'])) {
+                // Vérifier si c'est une suppression
+                if (isset($_POST['delete']) && $_POST['delete'] == '1') {
+                    $this->deleteProject();
+                    return;
+                }
+                // Sinon c'est une modification de visibilité
+                elseif (isset($_POST['visible'])) {
+                    $this->toggleProjectVisibility();
+                    return;
+                }
+            }
+
+            // Si on arrive ici, la requête POST n'est pas valide
+            $_SESSION['error'] = 'Requête invalide.';
+            header('Location: ' . url('admin/projects'));
+            exit;
+        }
+
+        // Affichage de la liste des projets
+        try {
+            include_once 'includes/db.php';
+            global $pdo;
+
+            $stmt = $pdo->query("SELECT * FROM projects ORDER BY id DESC");
+            $projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            echo $this->view('listProjects', ['projects' => $projects]);
+        } catch (Exception $e) {
+            $_SESSION['error'] = 'Erreur lors de la récupération des projets : ' . $e->getMessage();
+            echo $this->view('listProjects', ['projects' => []]);
+        }
+    }
+
+    // Modification de la visibilité d'un projet
+    public function toggleProjectVisibility()
+    {
+        try {
+            if (!isset($_POST['projectId']) || !isset($_POST['visible'])) {
+                throw new Exception('Données manquantes pour la modification de visibilité.');
+            }
+
+            include_once 'includes/db.php';
+            global $pdo;
+
+            $projectId = (int)$_POST['projectId'];
+            $visibility = (int)$_POST['visible'];
+
+            // Vérifier que le projet existe
+            $checkStmt = $pdo->prepare("SELECT id FROM projects WHERE id = :id");
+            $checkStmt->execute([':id' => $projectId]);
+
+            if (!$checkStmt->fetch()) {
+                throw new Exception('Le projet n\'existe pas.');
+            }
+
+            // Mettre à jour la visibilité
+            $stmt = $pdo->prepare("UPDATE projects SET visibilite = :visibilite WHERE id = :id");
+            $result = $stmt->execute([':visibilite' => $visibility, ':id' => $projectId]);
+
+            if (!$result) {
+                throw new Exception('Erreur lors de la mise à jour de la visibilité.');
+            }
+
+            $_SESSION['success'] = 'Visibilité du projet mise à jour avec succès.';
+        } catch (Exception $e) {
+            $_SESSION['error'] = 'Erreur lors de la modification de la visibilité : ' . $e->getMessage();
+        }
+
+        header('Location: ' . url('admin/projects'));
+        exit;
+    }
+
+    // suppression d'un projet
+    public function deleteProject()
+    {
+        try {
+            if (!isset($_POST['projectId'])) {
+                throw new Exception('ID du projet manquant.');
+            }
+
+            include_once 'includes/db.php';
+            global $pdo;
+
+            $projectId = (int)$_POST['projectId'];
+
+            // Récupérer les informations du projet avant suppression
+            $stmt = $pdo->prepare("SELECT img1, img2, img3 FROM projects WHERE id = :id");
+            $stmt->execute([':id' => $projectId]);
+            $project = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if (!$project) {
+                throw new Exception('Le projet n\'existe pas.');
+            }
+
+            // Supprimer les images du projet
+            $this->deleteProjectImages($project);
+
+            // Supprimer le projet de la base de données
+            $stmt = $pdo->prepare("DELETE FROM projects WHERE id = :id");
+            $result = $stmt->execute([':id' => $projectId]);
+
+            if (!$result) {
+                throw new Exception('Erreur lors de la suppression du projet en base de données.');
+            }
+
+            $_SESSION['success'] = 'Le projet a été supprimé avec succès.';
+        } catch (Exception $e) {
+            $_SESSION['error'] = 'Erreur lors de la suppression : ' . $e->getMessage();
+        }
+
+        header('Location: ' . url('admin/projects'));
+        exit;
+    }
+
+    private function deleteProjectImages($project)
+    {
+        $uploadDir = $_SERVER['DOCUMENT_ROOT'] . '/assets/img/projects/';
+
+        foreach (['img1', 'img2', 'img3'] as $imgField) {
+            if (!empty($project[$imgField])) {
+                $filePath = $uploadDir . $project[$imgField];
+                if (file_exists($filePath)) {
+                    if (!unlink($filePath)) {
+                        // Log l'erreur mais ne pas interrompre le processus
+                        error_log("Impossible de supprimer le fichier : " . $filePath);
+                    }
+                }
+            }
+        }
+    }
+
+    // ===== Page modification de projet =====
+    public function editProject($projectId){
+        if (!isset($_SESSION['user_id']) && !isset($_SESSION['admin']) == 1) {
+            header('HTTP/1.1 403 Forbidden');
+            echo view('403', ['title' => '403 - Accès interdit']);
+            exit;
+        }
+
+        // Si c'est une requête POST, traiter le formulaire AVANT de charger la vue
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $this->processEditProject($projectId);
+            return; // Important : arrêter l'exécution après le traitement POST
+        }
+
+        include_once 'includes/db.php';
+        global $pdo;
+
+        // Vérifier si le projet existe
+        $stmt = $pdo->prepare("SELECT * FROM projects WHERE id = :id");
+        $stmt->execute([':id' => $projectId]);
+        $project = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$project) {
+            $_SESSION['error'] = 'Le projet n\'existe pas.';
+            header('Location: ' . url('admin/projects'));
+            exit;
+        }
+
+        // Afficher le formulaire avec les données du projet
+        echo $this->view('edit_project', ['project' => $project]);
+    }
+
+    private function processEditProject($projectId)
+    {
+        try {
+            include_once 'includes/db.php';
+            global $pdo;
+
+            // Récupérer les informations actuelles du projet
+            $stmt = $pdo->prepare("SELECT * FROM projects WHERE id = :id");
+            $stmt->execute([':id' => $projectId]);
+            $currentProject = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if (!$currentProject) {
+                throw new Exception('Le projet n\'existe pas.');
+            }
+
+            // Validation des données
+            $errors = $this->validateEditProjectData();
+
+            if (!empty($errors)) {
+                $_SESSION['errors'] = $errors;
+                header('Location: ' . url('admin/projects/edit-project/') . $projectId);
+                exit;
+            }
+
+            // Traitement des nouvelles images
+            $images = $this->processEditImages($currentProject);
+
+            // Préparation des données pour la base
+            $projectData = [
+                'title' => trim($_POST['title']),
+                'description' => trim($_POST['description']),
+                'is_markdown' => isset($_POST['is_markdown']) ? 1 : 0,
+                'link' => trim($_POST['link']) ?: null,
+                'img1' => $images['img1'],
+                'img2' => $images['img2'],
+                'img3' => $images['img3'],
+                'visibilite' => (($_POST['projectStatus'] ?? '') === 'visible') ? 1 : 0,
+                'languages' => trim($_POST['tools']),
+                'id' => $projectId
+            ];
+
+            // Mise à jour en base de données
+            $this->updateProject($projectData);
+
+            // Message de succès
+            $_SESSION['success'] = 'Le projet a été modifié avec succès !';
+            header('Location: ' . url('admin/projects'));
+            exit;
+        } catch (Exception $e) {
+            $_SESSION['error'] = 'Erreur lors de la modification du projet : ' . $e->getMessage();
+            header('Location: ' . url('admin/projects/edit-project/') . $projectId);
+            exit;
+        }
+    }
+
+    private function validateEditProjectData()
+    {
+        $errors = [];
+
+        // Validation du titre
+        if (empty($_POST['title']) || strlen(trim($_POST['title'])) < 2) {
+            $errors[] = 'Le titre du projet doit contenir au moins 2 caractères.';
+        }
+
+        // Validation de la description
+        if (empty($_POST['description']) || strlen(trim($_POST['description'])) < 10) {
+            $errors[] = 'La description doit contenir au moins 10 caractères.';
+        }
+
+        // Validation du lien
+        if (!empty($_POST['link']) && !filter_var($_POST['link'], FILTER_VALIDATE_URL)) {
+            $errors[] = 'Veuillez saisir un lien valide.';
+        }
+
+        // Validation des langages
+        if (empty($_POST['tools'])) {
+            $errors[] = 'Veuillez saisir les langages utilisés.';
+        }
+
+        return $errors;
+    }
+
+    private function processEditImages($currentProject)
+    {
+        $uploadDir = $_SERVER['DOCUMENT_ROOT'] . '/assets/img/projects/';
+        $images = [
+            'img1' => $currentProject['img1'],
+            'img2' => $currentProject['img2'],
+            'img3' => $currentProject['img3']
+        ];
+
+        // Traitement de chaque image
+        $imageFields = ['image1' => 'img1', 'image2' => 'img2', 'image3' => 'img3'];
+
+        foreach ($imageFields as $inputName => $dbField) {
+            if (isset($_FILES[$inputName]) && $_FILES[$inputName]['error'] === UPLOAD_ERR_OK) {
+                // Supprimer l'ancienne image si elle existe
+                if (!empty($currentProject[$dbField])) {
+                    $oldFilePath = $uploadDir . $currentProject[$dbField];
+                    if (file_exists($oldFilePath)) {
+                        unlink($oldFilePath);
+                    }
+                }
+
+                // Uploader la nouvelle image
+                $newImage = $this->uploadImage($_FILES[$inputName], $uploadDir);
+                $images[$dbField] = $newImage;
+            }
+        }
+
+        return $images;
+    }
+
+    private function updateProject($data)
+    {
+        include_once 'includes/db.php';
+        global $pdo;
+
+        $stmt = $pdo->prepare("UPDATE projects
+            SET title = :title,
+                description = :description,
+                is_markdown = :is_markdown,
+                link = :link,
+                img1 = :img1,
+                img2 = :img2,
+                img3 = :img3,
+                visibilite = :visibilite,
+                languages = :languages
+            WHERE id = :id");
+
+        $result = $stmt->execute([
+            ':title' => $data['title'],
+            ':description' => $data['description'],
+            ':is_markdown' => $data['is_markdown'],
+            ':link' => $data['link'],
+            ':img1' => $data['img1'],
+            ':img2' => $data['img2'],
+            ':img3' => $data['img3'],
+            ':visibilite' => $data['visibilite'],
+            ':languages' => $data['languages'],
+            ':id' => $data['id']
+        ]);
+
+        if (!$result) {
+            throw new Exception('Erreur lors de la mise à jour en base de données.');
+        }
+
+        return true;
+    }
+}
