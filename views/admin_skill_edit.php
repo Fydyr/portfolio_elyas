@@ -3,7 +3,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title><?= isset($skill) && $skill ? 'Modifier' : 'Ajouter' ?> un skill</title>
+    <title><?= isset($skill) && $skill ? 'Modifier' : 'Ajouter' ?> un service</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
@@ -11,7 +11,7 @@
 </head>
 <body>
 <div class="container py-4">
-    <h1><?= $skill ? 'Modifier' : 'Ajouter' ?> un skill</h1>
+    <h1><?= $skill ? 'Modifier' : 'Ajouter' ?> un service</h1>
 
     <?php
     $featuresText = '';
@@ -45,23 +45,15 @@
                 </div>
                 <div class="col-md-6">
                     <label class="form-label">Type</label>
-                    <input type="text" name="type" class="form-control" value="<?= htmlspecialchars($skill['type'] ?? '') ?>" placeholder="ex: Langage de programmation">
-                </div>
-                <div class="col-md-6">
-                    <label class="form-label">Niveau</label>
-                    <select name="level" class="form-select">
-                        <?php foreach (['Débutant', 'Intermédiaire', 'Avancé'] as $lvl): ?>
-                            <option value="<?= $lvl ?>" <?= ($skill['level'] ?? '') === $lvl ? 'selected' : '' ?>><?= $lvl ?></option>
-                        <?php endforeach; ?>
-                    </select>
+                    <input type="text" name="type" class="form-control" value="<?= htmlspecialchars($skill['type'] ?? '') ?>" placeholder="ex: 3D Model, Rigging, Art">
                 </div>
                 <div class="col-md-6">
                     <label class="form-label">Icône</label>
-                    <input type="text" name="icon" class="form-control" value="<?= htmlspecialchars($skill['icon'] ?? '') ?>" data-icon-picker placeholder="fab fa-python">
+                    <input type="text" name="icon" class="form-control" value="<?= htmlspecialchars($skill['icon'] ?? '') ?>" data-icon-picker placeholder="fas fa-cube">
                 </div>
                 <div class="col-md-6">
-                    <label class="form-label">URL doc</label>
-                    <input type="url" name="doc_url" class="form-control" value="<?= htmlspecialchars($skill['doc_url'] ?? '') ?>">
+                    <label class="form-label">Lien de commande (VGen)</label>
+                    <input type="url" name="doc_url" class="form-control" value="<?= htmlspecialchars($skill['doc_url'] ?? '') ?>" placeholder="https://vgen.co/fyfyntt">
                 </div>
                 <div class="col-md-3">
                     <label class="form-label">Ordre</label>
@@ -78,8 +70,8 @@
                     <textarea name="description" class="form-control" rows="3"><?= htmlspecialchars($skill['description'] ?? '') ?></textarea>
                 </div>
                 <div class="col-12">
-                    <label class="form-label">Features (1 par ligne)</label>
-                    <textarea name="features" class="form-control" rows="5" placeholder="Manipulation du DOM&#10;Applications web interactives"><?= htmlspecialchars($featuresText) ?></textarea>
+                    <label class="form-label">Ce qui est inclus (1 par ligne)</label>
+                    <textarea name="features" class="form-control" rows="5" placeholder="Full hair: €25–40&#10;Whole outfit: €35–90&#10;Full model: €90–170"><?= htmlspecialchars($featuresText) ?></textarea>
                 </div>
             </div>
             <div class="mt-4">

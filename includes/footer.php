@@ -117,27 +117,14 @@ if (est_nouveau_visiteur()) {
                         <div class="footer-social">
                             <h5 class="social-title">Follow me</h5>
                             <div class="social-links">
-                                <a href="https://twitter.com/_FoxBee" target="_blank" rel="noopener" class="social-link" title="Twitter / X">
-                                    <i class="fab fa-twitter"></i>
-                                </a>
-                                <a href="https://www.instagram.com/fyfyntt/" target="_blank" rel="noopener" class="social-link" title="Instagram">
-                                    <i class="fab fa-instagram"></i>
-                                </a>
-                                <a href="https://www.youtube.com/@Fynt_Elyas" target="_blank" rel="noopener" class="social-link" title="YouTube">
-                                    <i class="fab fa-youtube"></i>
-                                </a>
-                                <a href="https://www.twitch.tv/fyfyntt" target="_blank" rel="noopener" class="social-link" title="Twitch">
-                                    <i class="fab fa-twitch"></i>
-                                </a>
-                                <a href="https://www.tiktok.com/@fyfyntt" target="_blank" rel="noopener" class="social-link" title="TikTok">
-                                    <i class="fab fa-tiktok"></i>
-                                </a>
-                                <a href="https://ko-fi.com/fyntsu" target="_blank" rel="noopener" class="social-link" title="Ko-fi">
-                                    <i class="fas fa-mug-hot"></i>
-                                </a>
-                                <a href="https://www.artstation.com/fyntsu/profile" target="_blank" rel="noopener" class="social-link" title="ArtStation">
-                                    <i class="fab fa-artstation"></i>
-                                </a>
+                                <?php
+                                    require_once __DIR__ . '/settings.php';
+                                    foreach (loadSocialLinks(true) as $s):
+                                ?>
+                                    <a href="<?= htmlspecialchars($s['url']) ?>" target="_blank" rel="noopener" class="social-link" title="<?= htmlspecialchars($s['label']) ?>">
+                                        <i class="<?= htmlspecialchars($s['icon'] ?: 'fas fa-link') ?>"></i>
+                                    </a>
+                                <?php endforeach; ?>
                             </div>
                         </div>
                     </div>

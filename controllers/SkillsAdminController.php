@@ -39,7 +39,7 @@ class SkillsAdminController extends BaseController
             $stmt->execute([':id' => $id]);
             $skill = $stmt->fetch(PDO::FETCH_ASSOC);
             if (!$skill) {
-                $_SESSION['error'] = 'Skill introuvable.';
+                $_SESSION['error'] = 'Service introuvable.';
                 header('Location: ' . url('admin/skills'));
                 exit;
             }
@@ -64,7 +64,7 @@ class SkillsAdminController extends BaseController
                 ':slug'        => trim($_POST['slug'] ?? ''),
                 ':description' => trim($_POST['description'] ?? '') ?: null,
                 ':type'        => trim($_POST['type'] ?? '') ?: null,
-                ':level'       => trim($_POST['level'] ?? '') ?: 'Intermédiaire',
+                ':level'       => trim($_POST['level'] ?? '') ?: null,
                 ':icon'        => trim($_POST['icon'] ?? '') ?: null,
                 ':doc_url'     => trim($_POST['doc_url'] ?? '') ?: null,
                 ':features'    => $features,
@@ -83,7 +83,7 @@ class SkillsAdminController extends BaseController
             }
 
             $pdo->prepare($sql)->execute($data);
-            $_SESSION['success'] = $id === null ? 'Skill ajouté.' : 'Skill modifié.';
+            $_SESSION['success'] = $id === null ? 'Service ajouté.' : 'Service modifié.';
             header('Location: ' . url('admin/skills'));
             exit;
         } catch (Exception $e) {
@@ -100,7 +100,7 @@ class SkillsAdminController extends BaseController
         $id = (int)($_POST['id'] ?? 0);
         if ($id > 0) {
             $pdo->prepare("DELETE FROM skills WHERE id = :id")->execute([':id' => $id]);
-            $_SESSION['success'] = 'Skill supprimé.';
+            $_SESSION['success'] = 'Service supprimé.';
         }
         header('Location: ' . url('admin/skills'));
         exit;
@@ -150,7 +150,7 @@ class SkillsAdminController extends BaseController
         $id = (int)($_POST['id'] ?? 0);
         if ($id > 0) {
             $pdo->prepare("DELETE FROM skill_categories WHERE id = :id")->execute([':id' => $id]);
-            $_SESSION['success'] = 'Catégorie supprimée (et ses skills associés).';
+            $_SESSION['success'] = 'Catégorie supprimée (et ses services associés).';
         }
         header('Location: ' . url('admin/skills'));
         exit;

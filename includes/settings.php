@@ -69,6 +69,23 @@ function renderMarkdown(string $md): string
 }
 
 /**
+ * Récupère les réseaux sociaux gérés en base.
+ * $featuredOnly = true -> uniquement ceux mis en avant (hero / footer compact).
+ */
+function loadSocialLinks(bool $featuredOnly = false): array
+{
+    global $pdo;
+    try {
+        $sql = "SELECT * FROM social_links WHERE visible = 1";
+        if ($featuredOnly) $sql .= " AND featured = 1";
+        $sql .= " ORDER BY sort_order, id";
+        return $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+    } catch (Exception $e) {
+        return [];
+    }
+}
+
+/**
  * Récupère les sections About visibles dans l'ordre.
  */
 function loadAboutSections(bool $visibleOnly = true): array

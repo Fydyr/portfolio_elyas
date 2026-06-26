@@ -56,12 +56,12 @@ $router->get('/projects/([a-zA-Z0-9-]+)', function ($slug) {
     (new PortfolioController())->category($slug);
 });
 
-// Page de contact (correspond à /index.php/contact)
-$router->get('/contact', function () {
-    include_once './controllers/ContactController.php';
-    $controller = new ContactController();
-    $controller->contact();
+// Page Links (réseaux sociaux / link-in-bio)
+$router->get('/links', function () {
+    include_once './controllers/LinksController.php';
+    (new LinksController())->index();
 });
+
 
 // Page des mentions légales (correspond à /index.php/legals-mentions)
 $router->get('/legal-mention', function () {
@@ -272,6 +272,32 @@ $router->post('/admin/portfolio/(\d+)/embed', function ($id) {
     (new PortfolioAdminController())->addEmbed($id);
 });
 
+// ===== Admin Réseaux sociaux =====
+$router->get('/admin/social', function () {
+    include_once 'controllers/SocialAdminController.php';
+    (new SocialAdminController())->index();
+});
+$router->get('/admin/social/add', function () {
+    include_once 'controllers/SocialAdminController.php';
+    (new SocialAdminController())->edit(null);
+});
+$router->post('/admin/social/add', function () {
+    include_once 'controllers/SocialAdminController.php';
+    (new SocialAdminController())->edit(null);
+});
+$router->get('/admin/social/edit/(\d+)', function ($id) {
+    include_once 'controllers/SocialAdminController.php';
+    (new SocialAdminController())->edit($id);
+});
+$router->post('/admin/social/edit/(\d+)', function ($id) {
+    include_once 'controllers/SocialAdminController.php';
+    (new SocialAdminController())->edit($id);
+});
+$router->post('/admin/social/delete', function () {
+    include_once 'controllers/SocialAdminController.php';
+    (new SocialAdminController())->delete();
+});
+
 // ==== Routes de test =====
 $router->get('/test', function () {
     echo "<h1>✅ Test route fonctionne !</h1>";
@@ -292,7 +318,6 @@ $router->get('/debug', function () {
     echo "<ul>";
     echo "<li><a href='" . url('') . "'>Accueil</a></li>";
     echo "<li><a href='" . url('test') . "'>Test</a></li>";
-    echo "<li><a href='" . url('contact') . "'>Contact</a></li>";
     echo "</ul>";
 });
 

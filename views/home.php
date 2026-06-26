@@ -62,7 +62,7 @@ $isOpen           = ($commissionStatus !== 'closed');
                         </div>
                         <div class="stat-label">Commissions <?= $isOpen ? 'open' : 'closed' ?></div>
                     </a>
-                    <a href="<?= url('contact') ?>" class="stat-card" style="text-decoration: none; color: inherit; transition: transform 0.3s ease;">
+                    <a href="<?= url('links') ?>" class="stat-card" style="text-decoration: none; color: inherit; transition: transform 0.3s ease;">
                         <div class="stat-number">15+</div>
                         <div class="stat-label">Platforms</div>
                     </a>
@@ -80,24 +80,14 @@ $isOpen           = ($commissionStatus !== 'closed');
                 </div>
 
                 <div class="social-links">
-                    <a href="https://twitter.com/_FoxBee" target="_blank" rel="noopener" class="social-link" title="Twitter / X">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-                    <a href="https://www.instagram.com/fyfyntt/" target="_blank" rel="noopener" class="social-link" title="Instagram">
-                        <i class="fab fa-instagram"></i>
-                    </a>
-                    <a href="https://www.youtube.com/@Fynt_Elyas" target="_blank" rel="noopener" class="social-link" title="YouTube">
-                        <i class="fab fa-youtube"></i>
-                    </a>
-                    <a href="https://www.twitch.tv/fyfyntt" target="_blank" rel="noopener" class="social-link" title="Twitch">
-                        <i class="fab fa-twitch"></i>
-                    </a>
-                    <a href="https://ko-fi.com/fyntsu" target="_blank" rel="noopener" class="social-link" title="Ko-fi">
-                        <i class="fas fa-mug-hot"></i>
-                    </a>
-                    <a href="https://discord.gg/DTvkz3BQHz" target="_blank" rel="noopener" class="social-link" title="Discord">
-                        <i class="fab fa-discord"></i>
-                    </a>
+                    <?php
+                        require_once __DIR__ . '/../includes/settings.php';
+                        foreach (loadSocialLinks(true) as $s):
+                    ?>
+                        <a href="<?= htmlspecialchars($s['url']) ?>" target="_blank" rel="noopener" class="social-link" title="<?= htmlspecialchars($s['label']) ?>">
+                            <i class="<?= htmlspecialchars($s['icon'] ?: 'fas fa-link') ?>"></i>
+                        </a>
+                    <?php endforeach; ?>
                 </div>
             </div>
         </div>
@@ -255,11 +245,6 @@ $isOpen           = ($commissionStatus !== 'closed');
                         <span class="tech-info-label">Type:</span>
                         <span class="tech-info-value tech-type"></span>
                     </div>
-                    <div class="tech-info-item">
-                        <i class="fas fa-tag"></i>
-                        <span class="tech-info-label">Price:</span>
-                        <span class="tech-info-value tech-level"></span>
-                    </div>
                 </div>
                 <div class="tech-modal-features">
                     <h4><i class="fas fa-circle-check me-2"></i>What's included:</h4>
@@ -327,7 +312,6 @@ $isOpen           = ($commissionStatus !== 'closed');
                     document.querySelector('.tech-modal-title').textContent = tech.name;
                     document.querySelector('.tech-modal-description').textContent = tech.description;
                     document.querySelector('.tech-type').textContent = tech.type;
-                    document.querySelector('.tech-level').textContent = tech.level;
 
                     const iconElement = document.querySelector('.tech-icon-display');
                     iconElement.className = 'tech-icon-display ' + tech.icon;

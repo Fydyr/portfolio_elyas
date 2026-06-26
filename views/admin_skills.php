@@ -18,7 +18,7 @@
                 <i class="bi bi-folder-plus"></i> Nouvelle catégorie
             </a>
             <a href="<?= url('admin/skills/add') ?>" class="btn btn-primary">
-                <i class="bi bi-plus-circle"></i> Nouveau skill
+                <i class="bi bi-plus-circle"></i> Nouveau service
             </a>
             <a href="<?= url('admin') ?>" class="btn btn-outline-light">
                 <i class="bi bi-arrow-left"></i> Retour
@@ -43,7 +43,7 @@
                         <i class="bi bi-pencil"></i>
                     </a>
                     <form method="post" action="<?= url('admin/skills/category/delete') ?>" class="d-inline"
-                          onsubmit="return confirm('Supprimer la catégorie ET tous ses skills ?');">
+                          onsubmit="return confirm('Supprimer la catégorie ET tous ses services ?');">
                         <input type="hidden" name="id" value="<?= $cat['id'] ?>">
                         <button type="submit" class="btn btn-sm btn-danger"><i class="bi bi-trash"></i></button>
                     </form>
@@ -52,14 +52,13 @@
             <div class="card-body">
                 <?php $catSkills = array_filter($skills, fn($s) => (int)$s['category_id'] === (int)$cat['id']); ?>
                 <?php if (empty($catSkills)): ?>
-                    <p class="text-muted mb-0">Aucun skill dans cette catégorie.</p>
+                    <p class="text-muted mb-0">Aucun service dans cette catégorie.</p>
                 <?php else: ?>
                     <table class="table table-dark table-hover align-middle mb-0">
                         <thead>
                             <tr>
                                 <th>Nom</th>
                                 <th>Slug</th>
-                                <th>Niveau</th>
                                 <th>Ordre</th>
                                 <th>Visible</th>
                                 <th class="text-end">Actions</th>
@@ -73,7 +72,6 @@
                                         <strong><?= htmlspecialchars($skill['name']) ?></strong>
                                     </td>
                                     <td><code><?= htmlspecialchars($skill['slug']) ?></code></td>
-                                    <td><?= htmlspecialchars($skill['level']) ?></td>
                                     <td><?= (int)$skill['sort_order'] ?></td>
                                     <td>
                                         <?php if ($skill['visible']): ?>
@@ -87,7 +85,7 @@
                                             <i class="bi bi-pencil"></i>
                                         </a>
                                         <form method="post" action="<?= url('admin/skills/delete') ?>" class="d-inline"
-                                              onsubmit="return confirm('Supprimer ce skill ?');">
+                                              onsubmit="return confirm('Supprimer ce service ?');">
                                             <input type="hidden" name="id" value="<?= $skill['id'] ?>">
                                             <button type="submit" class="btn btn-sm btn-danger"><i class="bi bi-trash"></i></button>
                                         </form>

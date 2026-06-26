@@ -19,7 +19,7 @@ class SeoController extends BaseController
         $urls = [
             ['loc' => $base . '/',               'priority' => '1.0', 'changefreq' => 'weekly', 'lastmod' => $today],
             ['loc' => $base . '/projects',       'priority' => '0.9', 'changefreq' => 'weekly', 'lastmod' => $today],
-            ['loc' => $base . '/contact',        'priority' => '0.7', 'changefreq' => 'monthly','lastmod' => $today],
+            ['loc' => $base . '/links',          'priority' => '0.7', 'changefreq' => 'monthly','lastmod' => $today],
             ['loc' => $base . '/price',          'priority' => '0.6', 'changefreq' => 'monthly','lastmod' => $today],
             ['loc' => $base . '/legal-mention',  'priority' => '0.3', 'changefreq' => 'yearly', 'lastmod' => $today],
         ];

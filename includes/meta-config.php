@@ -61,9 +61,9 @@ function pagesMetaCatalog(): array
             'description' => "Fynt (Fyntsu) is a VTuber artist working across 3D modelling, Live2D rigging, animation and illustration. Learn more and get in touch.",
             'type'        => 'profile',
         ],
-        'contact' => [
-            'title'       => 'Contact - Fynt',
-            'description' => "Want a commission or just to say hi? Reach Fynt on Discord, VGen and social media.",
+        'links' => [
+            'title'       => 'Links - Fynt',
+            'description' => "All of Fynt's links in one place: commissions (VGen), Discord, and every social platform.",
             'type'        => 'website',
         ],
         'legal-mention' => [
@@ -239,7 +239,7 @@ function renderJsonLd(string $page, array $context = []): void
     // Fil d'Ariane pour les pages secondaires
     $breadcrumbs = [
         'projects'      => [['Home', '/'], ['Portfolio', '/projects']],
-        'contact'       => [['Home', '/'], ['Contact', '/contact']],
+        'links'         => [['Home', '/'], ['Links', '/links']],
         'legal-mention' => [['Home', '/'], ['Legal notice', '/legal-mention']],
         'price'         => [['Home', '/'], ['Commissions', '/price']],
     ];

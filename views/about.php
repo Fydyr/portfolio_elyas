@@ -114,8 +114,8 @@
                 <a href="<?= url('projects') ?>" class="btn btn-outline-light">
                     <i class="fas fa-palette"></i> Portfolio
                 </a>
-                <a href="<?= url('contact') ?>" class="btn btn-outline-light">
-                    <i class="fas fa-comment-dots"></i> Contact
+                <a href="<?= url('links') ?>" class="btn btn-outline-light">
+                    <i class="fas fa-link"></i> Links
                 </a>
             </div>
         </div>
@@ -162,18 +162,14 @@
     <div class="card">
         <div class="card-body">
             <div class="social-grid">
-                <a href="https://twitter.com/_FoxBee" target="_blank" rel="noopener" class="social-tile"><i class="fab fa-twitter"></i><span>Twitter</span></a>
-                <a href="https://www.instagram.com/fyfyntt/" target="_blank" rel="noopener" class="social-tile"><i class="fab fa-instagram"></i><span>Instagram</span></a>
-                <a href="https://www.youtube.com/@Fynt_Elyas" target="_blank" rel="noopener" class="social-tile"><i class="fab fa-youtube"></i><span>YouTube</span></a>
-                <a href="https://www.twitch.tv/fyfyntt" target="_blank" rel="noopener" class="social-tile"><i class="fab fa-twitch"></i><span>Twitch</span></a>
-                <a href="https://www.tiktok.com/@fyfyntt" target="_blank" rel="noopener" class="social-tile"><i class="fab fa-tiktok"></i><span>TikTok</span></a>
-                <a href="https://www.artstation.com/fyntsu/profile" target="_blank" rel="noopener" class="social-tile"><i class="fab fa-artstation"></i><span>ArtStation</span></a>
-                <a href="https://www.deviantart.com/fyntb" target="_blank" rel="noopener" class="social-tile"><i class="fab fa-deviantart"></i><span>DeviantArt</span></a>
-                <a href="https://cara.app/fyfyntt" target="_blank" rel="noopener" class="social-tile"><i class="fas fa-paintbrush"></i><span>Cara</span></a>
-                <a href="https://ko-fi.com/fyntsu" target="_blank" rel="noopener" class="social-tile"><i class="fas fa-mug-hot"></i><span>Ko-fi</span></a>
-                <a href="https://www.patreon.com/fyfynt" target="_blank" rel="noopener" class="social-tile"><i class="fab fa-patreon"></i><span>Patreon</span></a>
-                <a href="https://vgen.co/fyfyntt" target="_blank" rel="noopener" class="social-tile"><i class="fas fa-pen-nib"></i><span>VGen</span></a>
-                <a href="https://discord.gg/DTvkz3BQHz" target="_blank" rel="noopener" class="social-tile"><i class="fab fa-discord"></i><span>Discord</span></a>
+                <?php
+                    require_once __DIR__ . '/../includes/settings.php';
+                    foreach (loadSocialLinks(false) as $s):
+                ?>
+                    <a href="<?= htmlspecialchars($s['url']) ?>" target="_blank" rel="noopener" class="social-tile">
+                        <i class="<?= htmlspecialchars($s['icon'] ?: 'fas fa-link') ?>"></i><span><?= htmlspecialchars($s['label']) ?></span>
+                    </a>
+                <?php endforeach; ?>
             </div>
         </div>
     </div>

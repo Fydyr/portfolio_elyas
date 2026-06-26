@@ -271,6 +271,18 @@
             </a>
         </div>
 
+        <div class="col-md-4">
+            <a href="<?= url('admin/social') ?>" class="admin-card-link">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <i class="bi bi-share-fill" style="font-size:2rem;color:#B98FFF;"></i>
+                        <h5 class="card-title mt-2">Réseaux sociaux</h5>
+                        <p class="card-text text-muted">Ajouter / modifier / supprimer les liens</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+
     </div>
 </div>
 

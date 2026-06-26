@@ -46,7 +46,7 @@ $nav_items = [
     'about'    => ['title' => 'About',       'icon' => '✨', 'url' => url('about')],
     'projects' => ['title' => 'Portfolio',   'icon' => '🎨', 'url' => url('projects')],
     'price'    => ['title' => 'Commissions', 'icon' => '🧾', 'url' => url('price')],
-    'contact'  => ['title' => 'Contact',     'icon' => '💬', 'url' => url('contact')],
+    'links'    => ['title' => 'Links',       'icon' => '🔗', 'url' => url('links')],
 ];
 
 // Gestion de l'authentification
